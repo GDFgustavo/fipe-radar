@@ -1,0 +1,120 @@
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--background);
+}
+
+.content {
+    max-width: 1280px;
+    height: 4rem;
+    padding: 1rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.logoIcon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoSvg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.logoText {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.navDesktop {
+    display: none;
+    gap: 0.5rem;
+}
+
+.navButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px;
+    gap: 1rem;
+    border-radius: 0.4rem;
+}
+
+.active {
+    background: var(--secondary);
+    color: var(--foreground);
+}
+
+.navHover {
+    &:hover {
+        color: var(--secondary);
+        background-color: var(--foreground);
+    }
+}
+
+.mobileButton {
+    background: transparent;
+    border: none;
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.iconLarge {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.mobileMenu {
+    border-top: 1px solid var(--border);
+}
+
+.navMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+}
+
+.fullWidth {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .navDesktop {
+        display: flex;
+        align-items: center;
+    }
+
+    .mobileButton {
+        display: none;
+    }
+
+    .mobileMenu {
+        display: none;
+    }
+}
