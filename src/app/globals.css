@@ -8,12 +8,15 @@
     --background: #fff;
     --foreground: #000000;
     --secondary: oklch(0.97 0 0);
+    --muted-foreground: oklch(51.028% 0.00006 271.152);
     --border: oklch(0.922 0 0);
   }
 }
 
 body {
-  font-weight: 500;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-geist-sans);
   color: var(--foreground);
   background: var(--background);
