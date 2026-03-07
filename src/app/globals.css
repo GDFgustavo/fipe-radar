@@ -1,15 +1,17 @@
 :root {
-  --background: #ffffff;
+  --background: oklch(0.985 0 0);
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #fff;
+    --background: oklch(0.985 0 0);
     --foreground: #000000;
     --secondary: oklch(0.97 0 0);
     --muted-foreground: oklch(51.028% 0.00006 271.152);
-    --border: oklch(0.922 0 0);
+    --card: oklch(1 0 0);
+    --text-color: rgba(255, 255, 255, 0.8);
+    --border: oklch(0.90 0 0);
   }
 }
 
