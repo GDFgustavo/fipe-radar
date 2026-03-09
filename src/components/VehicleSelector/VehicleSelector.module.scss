@@ -1,0 +1,98 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.typeGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+.typeButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--border);
+    background: var(--background);
+    color: var(--muted-foreground);
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--primary);
+        background: var(--secondary);
+    }
+}
+
+.typeButtonActive {
+    border-color: var(--primary);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--foreground);
+}
+
+.typeIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.typeIconActive {
+    color: var(--primary);
+}
+
+.typeText {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.selectGrid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.selectTrigger {
+    height: 3rem;
+    width: 100%;
+    background: var(--background);
+}
+
+.searchButton {
+    height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--foreground);
+    color: var(--background);
+    border-radius: 0.5rem;
+}
+
+@media (min-width: 767px) {
+    .typeGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .selectGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

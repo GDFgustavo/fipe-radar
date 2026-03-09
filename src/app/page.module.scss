@@ -288,7 +288,7 @@
     }
 
     .heroGrid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         align-items: center;
     }
 
@@ -304,6 +304,11 @@
 
     .heroTitle {
         font-size: 3.5rem;
+    }
+
+    .heroGrid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
     }
 
     .featuresGrid {
