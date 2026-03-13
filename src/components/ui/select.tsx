@@ -33,7 +33,7 @@ function SelectCustom<Option extends BaseOption>({
             backgroundColor: "#ffffff",
             border: "1px solid #e5e7eb",
             borderRadius: "8px",
-            padding: "8px 12px",
+            padding: "4px 4px",
             cursor: "pointer",
             fontSize: "14px",
             fontWeight: 500,

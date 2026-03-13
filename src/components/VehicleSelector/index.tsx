@@ -6,11 +6,13 @@ import styles from "./VehicleSelector.module.scss"
 import { Bike, Car, Truck } from "lucide-react";
 
 interface VehicleSelectorProps {
+    layout?: 'horizontal' | 'vertical'
     textButton: string
     vehicleType?: string
+    onClick?: () => void
 }
 
-export function VehicleSelector({ textButton, vehicleType }: VehicleSelectorProps) {
+export function VehicleSelector({ layout = 'horizontal', textButton, vehicleType, onClick }: VehicleSelectorProps) {
     return (
         <div className={styles.container}>
             <div className={styles.section}>
@@ -40,7 +42,7 @@ export function VehicleSelector({ textButton, vehicleType }: VehicleSelectorProp
                 </div>
             </div>
 
-            <div className={styles.selectGrid}>
+            <div className={layout === 'vertical' ? styles.verticalGrid : styles.selectGrid}>
                 <div className={styles.field}>
                     <label className={styles.label}>Marca</label>
                     <SelectCustom
@@ -68,6 +70,7 @@ export function VehicleSelector({ textButton, vehicleType }: VehicleSelectorProp
             <button
                 type="button"
                 className={styles.searchButton}
+                onClick={onClick}
             >
                 {textButton}
             </button>
