@@ -2,6 +2,7 @@ import { formatMonthYear } from '@/utils/formatDate';
 import styles from './page.module.scss'
 import { BarChart2, Bell, Clock, Search, Shield, TrendingUp } from "lucide-react"
 import { VehicleSelector } from '@/components/VehicleSelector';
+import { Button } from '@/components/Button';
 
 const features = [
   {
@@ -102,7 +103,8 @@ export default function Home() {
                       Selecione o veículo para ver o valor FIPE
                     </p>
                   </div>
-                  <VehicleSelector textButton='Consultar Valor FIPE' />
+                  <VehicleSelector />
+                  <Button textButton="Consultar Valor FIPE" />
                 </div>
               </div>
             </div>

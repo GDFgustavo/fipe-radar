@@ -7,12 +7,10 @@ import { Bike, Car, Truck } from "lucide-react";
 
 interface VehicleSelectorProps {
     layout?: 'horizontal' | 'vertical'
-    textButton: string
     vehicleType?: string
-    onClick?: () => void
 }
 
-export function VehicleSelector({ layout = 'horizontal', textButton, vehicleType, onClick }: VehicleSelectorProps) {
+export function VehicleSelector({ layout = 'horizontal', vehicleType }: VehicleSelectorProps) {
     return (
         <div className={styles.container}>
             <div className={styles.section}>
@@ -67,13 +65,6 @@ export function VehicleSelector({ layout = 'horizontal', textButton, vehicleType
                     />
                 </div>
             </div>
-            <button
-                type="button"
-                className={styles.searchButton}
-                onClick={onClick}
-            >
-                {textButton}
-            </button>
         </div>
     )
 }

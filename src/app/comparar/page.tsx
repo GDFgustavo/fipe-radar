@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Plus, X, Car, Calendar, Tag, Fuel } from "lucide-react"
 import styles from './Comparar.module.scss'
 import { VehicleSelector } from "@/components/VehicleSelector"
+import { Button } from "@/components/Button"
 
 function ComparisonSlot() {
     const [isAdding, setIsAdding] = useState(false)
@@ -104,7 +105,8 @@ function ComparisonSlot() {
                 </div>
 
                 <div className={styles.addContent}>
-                    <VehicleSelector layout="vertical" textButton="Adicionar ao Comparativo" onClick={() => setHandleAdd(true)} />
+                    <VehicleSelector layout="vertical" />
+                    <Button textButton="Adicionar ao Comparativo" onClick={() => setHandleAdd(true)} />
                 </div>
             </div>
         )
