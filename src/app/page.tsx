@@ -1,8 +1,11 @@
+'use client'
+
 import { formatMonthYear } from '@/utils/formatDate';
 import styles from './page.module.scss'
 import { BarChart2, Bell, Clock, Search, Shield, TrendingUp } from "lucide-react"
 import { VehicleSelector } from '@/components/VehicleSelector';
 import { Button } from '@/components/Button';
+import { FipeResult } from '@/components/FipeResult';
 
 const features = [
   {
@@ -56,6 +59,10 @@ const stats = [
 ]
 
 export default function Home() {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id)
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className={styles.page}>
@@ -69,9 +76,9 @@ export default function Home() {
             <div className={styles.heroContent}>
               <div className={styles.badge}>
                 <TrendingUp className={styles.badgeIcon} />
-                <time dateTime={new Date().toISOString()}>
+                <span>
                   {formatMonthYear(new Date())}
-                </time>
+                </span>
               </div>
 
               <h1 className={styles.heroTitle}>
@@ -104,7 +111,7 @@ export default function Home() {
                     </p>
                   </div>
                   <VehicleSelector />
-                  <Button textButton="Consultar Valor FIPE" />
+                  <Button onClick={() => scrollToSection("result")} textButton="Consultar Valor FIPE" />
                 </div>
               </div>
             </div>
@@ -112,9 +119,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={styles.resultSection}>
+      <section id="result" className={styles.resultSection}>
         <div className={styles.resultContainer}>
-          <p>Resultado da consulta</p>
+          <FipeResult />
         </div>
       </section>
 
