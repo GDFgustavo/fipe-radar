@@ -75,7 +75,7 @@ function ComparisonSlot() {
                                 Combustível
                             </span>
                             <span className={styles.detailValue}>
-                                Gasolina aditivada 2.0 hiper gas turbo v power
+                                Gasolina
                             </span>
                         </div>
                     </div>

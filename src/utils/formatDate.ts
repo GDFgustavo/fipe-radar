@@ -4,3 +4,8 @@ export function formatMonthYear(date: Date) {
 
     return `${`Atualizado em ${month}`} ${year}`
 }
+
+export function formatDate() {
+    return new Date().toLocaleDateString('pt-BR')
+
+}
