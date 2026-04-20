@@ -96,6 +96,38 @@
     font-weight: bold;
 }
 
+.variationBadge {
+    text-align: right;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    .varLabel {
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .varValue {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 18px;
+        font-weight: 800;
+        margin-top: 2px;
+    }
+
+    &.up {
+        background-color: rgba(34, 197, 94, 0.15);
+        color: #22c55e;
+    }
+
+    &.down {
+        background-color: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+    }
+}
+
 .reference {
     margin-top: 0.75rem;
     font-size: 0.85rem;

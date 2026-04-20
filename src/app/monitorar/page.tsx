@@ -2,13 +2,35 @@
 
 import { VehicleSelector } from "@/components/VehicleSelector";
 import styles from './Monitorar.module.scss'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Target, Mail, TrendingUp, TrendingDown, Car } from "lucide-react"
 import { Button } from "@/components/Button";
 import { NumericFormat } from "react-number-format";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useFipeForm } from "@/hooks/useFipeForm";
+import { ApiErrorMessage } from "@/components/ApiErrorMensage";
 
 export default function Monitorar() {
-    const [priceTrend, setPriceTrend] = useState<"up" | "down" | null>(null)
+    const fipe = useFipeForm()
+    const { hasError, refetchAll, dismissError } = fipe
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const [priceTrend, setPriceTrend] = useState<"up" | "down">('up')
+
+    const vehicleType = searchParams.get("vehicleType")
+    const brand = searchParams.get("brand")
+    const model = searchParams.get("model")
+    const year = searchParams.get("year")
+    useEffect(() => {
+        if (vehicleType) fipe.onVehicleChange(vehicleType)
+        if (brand) fipe.onBrandChange(brand)
+        if (model) fipe.onModelChange(model)
+        if (year) fipe.onYearChange(year)
+        if (vehicleType && brand && model && year) {
+            router.replace("/monitorar")
+        }
+
+    }, [brand, fipe, model, router, vehicleType, year])
     return (
         <div className={styles.section}>
             <div className={styles.container}>
@@ -17,13 +39,16 @@ export default function Monitorar() {
                         <div className={styles.cardHeader}>
                             <h2 className={styles.cardTitle}>Novo monitoramento</h2>
                         </div>
-                        <div className={styles.cardSubtitle}>
-                            <div className={styles.icon}>
-                                <Car size={16} />
+                        {hasError && (
+                            <div style={{ marginBottom: '1.5rem' }}>
+                                <ApiErrorMessage onRetry={refetchAll} onDismiss={dismissError} />
                             </div>
+                        )}
+                        <div className={styles.cardSubtitle}>
+                            <div className={styles.icon}><Car size={16} /></div>
                             <h2>Detalhes do veículo</h2>
                         </div>
-                        <VehicleSelector />
+                        <VehicleSelector {...fipe} />
                         <div className={styles.monitorGrid}>
 
                             <div className={styles.field}>

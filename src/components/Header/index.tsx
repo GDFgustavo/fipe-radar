@@ -23,7 +23,7 @@ export function Header() {
             <div className={styles.content}>
                 <Link href="/" className={styles.logo}>
                     <div className={styles.logoIcon}>
-                        <Image src={logo} alt="Fipe Radar Logo" className={styles.logoSvg} />
+                        <Image src={logo} alt="Fipe Radar Logo" className={styles.logoSvg} priority />
                     </div>
                     <span className={styles.logoText}>
                         FIPE Radar

@@ -18,6 +18,7 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .export {
@@ -196,13 +197,187 @@
     color: var(--muted-foreground);
 }
 
+.removeButton {
+    border-radius: 999px;
+    transition: 0.2s;
+    background: transparent;
+    border: none;
+}
+
+.removeIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    transition: 0.2s ease;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+    svg {
+        height: 16px;
+        width: 16px;
+    }
+
+    &:hover {
+        padding: 0.5rem 0.5rem;
+        color: var(--secondary);
+        background-color: var(--foreground);
+    }
+}
+
+.historySection {
+    margin: 1.5rem 0 0;
+    padding: 1.5rem 1.5rem 0;
+    border-top: 1px solid var(--border);
+
+    .historyHeader {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+        color: #1e293b;
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+        }
+    }
+}
+
+.historyList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.historyCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    background-color: #fff;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+    min-width: 0;
+
+    &.activeCard {
+        border: 1px solid #008b52;
+        background-color: #008b510a;
+
+        .numberBadge {
+            background-color: #008b52;
+            color: #fff;
+        }
+    }
+}
+
+.leftInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.numberBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.dateStack {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.monthText {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #000;
+    text-transform: capitalize;
+}
+
+.statusLabel {
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+}
+
+.rightValue {
+    width: 100%;
+    text-align: left;
+
+    .priceText {
+        font-size: 1.1rem;
+        font-weight: 700;
+        word-break: break-all;
+    }
+}
+
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.variationBadge {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    padding: 0.875rem 1.25rem;
+    background: var(--secondary);
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+
+    .variationLabel {
+        font-size: 0.875rem;
+        color: var(--muted-foreground);
+    }
+
+    .variationValue {
+        font-size: 1rem;
+        font-weight: 700;
+        word-break: break-all;
+    }
+
+    &.up .variationValue {
+        color: #008b52;
+    }
+
+    &.down .variationValue {
+        color: #dc2626;
+    }
+}
+
+.spinnerWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .exportImage {
     position: absolute;
     left: -9999px;
     width: 800px;
     max-width: 800px;
 }
-
 
 @media (min-width: 640px) {
     .export {
@@ -215,5 +390,30 @@
 
     .cardContent {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .historyCard {
+        padding: 0.75rem 1rem;
+    }
+
+    .priceText {
+        font-size: 1rem;
+    }
+
+    .variationBadge {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .rightValue {
+        width: auto;
+        text-align: right;
+    }
+
+    .historyCard {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 }

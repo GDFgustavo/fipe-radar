@@ -5,8 +5,18 @@ import { Tag, Calendar, Fuel, CheckCircle2, Globe } from "lucide-react"
 import logo from '../../../public/fipe-logo.svg'
 import Image from "next/image"
 import { formatDate } from "@/utils/formatDate"
+import { VehicleDetails } from "@/types/vehicle"
 
-export function FipeResultImage() {
+interface FipeResultImageProps {
+    data: VehicleDetails;
+    variation?: {
+        texto: string;
+        isPositive: boolean;
+        sinal: string;
+    } | null;
+}
+
+export function FipeResultImage({ data, variation }: FipeResultImageProps) {
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
@@ -31,7 +41,7 @@ export function FipeResultImage() {
                 <div className={styles.vehicleInfo}>
                     <p className={styles.vehicleLabel}>Veículo Consultado</p>
                     <h2 className={styles.vehicleTitle}>
-                        Chevrolet Vectra
+                        {data.brand} {data.model}
                     </h2>
                 </div>
 
@@ -40,13 +50,21 @@ export function FipeResultImage() {
                         <div>
                             <p className={styles.priceLabel}>Valor na tabela FIPE</p>
                             <p className={styles.priceValue}>
-                                R$ 23.600
+                                {data.price}
                             </p>
                         </div>
+                        {variation && (
+                            <div className={`${styles.variationBadge} ${variation.isPositive ? styles.up : styles.down}`}>
+                                <p className={styles.varLabel}>Variação (3 meses)</p>
+                                <div className={styles.varValue}>
+                                    <span>{variation.sinal} {variation.texto}</span>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <p className={styles.reference}>
-                        Referência: Março de 2026
+                        Referência: {data.referenceMonth}
                     </p>
                 </div>
 
@@ -56,7 +74,7 @@ export function FipeResultImage() {
                             <Tag />
                         </div>
                         <p className={styles.cardLabel}>Código FIPE</p>
-                        <p className={styles.cardValue}>164433-7</p>
+                        <p className={styles.cardValue}>{data.codeFipe}</p>
                     </div>
 
                     <div className={styles.card}>
@@ -64,7 +82,7 @@ export function FipeResultImage() {
                             <Calendar />
                         </div>
                         <p className={styles.cardLabel}>Ano/Modelo</p>
-                        <p className={styles.cardValue}>2000/2001</p>
+                        <p className={styles.cardValue}>{data.modelYear}</p>
                     </div>
 
                     <div className={styles.card}>
@@ -72,7 +90,7 @@ export function FipeResultImage() {
                             <Fuel />
                         </div>
                         <p className={styles.cardLabel}>Combustível</p>
-                        <p className={styles.cardValue}>Gasolina</p>
+                        <p className={styles.cardValue}>{data.fuel}</p>
                     </div>
                 </div>
 

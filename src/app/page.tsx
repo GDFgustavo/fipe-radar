@@ -6,6 +6,10 @@ import { BarChart2, Bell, Clock, Search, Shield, TrendingUp } from "lucide-react
 import { VehicleSelector } from '@/components/VehicleSelector';
 import { Button } from '@/components/Button';
 import { FipeResult } from '@/components/FipeResult';
+import { useFipeForm } from '@/hooks/useFipeForm';
+import { Spinner } from '@/components/ui/Spinner';
+import { useVehicleStore } from '@/store/useVehicleStore';
+import { ApiErrorMessage } from '@/components/ApiErrorMensage';
 
 const features = [
   {
@@ -53,16 +57,26 @@ const steps = [
 
 
 const stats = [
-  { value: "50k+", label: "Veículos cadastrados" },
-  { value: "100+", label: "Marcas disponíveis" },
-  { value: "15 anos", label: "De histórico" },
+  { value: "+90 Marcas", label: "Todos os veículos do mercado nacional" },
+  { value: "3 Categorias", label: "Carros, Motos e Caminhões" },
+  { value: "100% Gratuito", label: "Consulta oficial e rápida" },
 ]
 
 export default function Home() {
+  const fipe = useFipeForm()
+  const { isDetailsLoading, hasError, refetchAll, dismissError } = fipe
+  const { lastResult, setLastResult, clearLastResult } = useVehicleStore();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     element?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const handleSearch = async (id: string) => {
+    const result = await fipe.onSubmit();
+    scrollToSection(id)
+    if (result) setLastResult(result);
+  }
 
   return (
     <div className={styles.page}>
@@ -110,8 +124,8 @@ export default function Home() {
                       Selecione o veículo para ver o valor FIPE
                     </p>
                   </div>
-                  <VehicleSelector />
-                  <Button onClick={() => scrollToSection("result")} textButton="Consultar Valor FIPE" />
+                  <VehicleSelector {...fipe} />
+                  <Button onClick={() => handleSearch('result')} textButton="Consultar Valor FIPE" />
                 </div>
               </div>
             </div>
@@ -119,11 +133,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="result" className={styles.resultSection}>
-        <div className={styles.resultContainer}>
-          <FipeResult />
-        </div>
-      </section>
+      {(hasError || isDetailsLoading || lastResult) && (
+        <section id="result" className={styles.resultSection}>
+          <div className={styles.resultContainer}>
+
+            {hasError && (
+              <ApiErrorMessage onRetry={refetchAll} onDismiss={dismissError} />
+            )}
+
+            {!hasError && isDetailsLoading && (
+              <div className={styles.loading}>
+                <Spinner />
+              </div>
+            )}
+
+            {!hasError && !isDetailsLoading && lastResult && (
+              <FipeResult data={lastResult} onRemove={clearLastResult} />
+            )}
+
+          </div>
+        </section>
+      )}
 
       <section className={styles.featuresSection}>
         <div className={styles.container}>

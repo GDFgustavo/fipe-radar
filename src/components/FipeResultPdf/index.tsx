@@ -10,6 +10,7 @@ import {
 import { styles } from './styles'
 import logo from '../../../public/fipe-logo-black.png'
 import { formatDate } from '@/utils/formatDate'
+import { VehicleDetails } from '@/types/vehicle'
 Font.register({
   family: 'Open Sans',
   fonts: [
@@ -28,7 +29,16 @@ Font.register({
   ]
 })
 
-export const FipeResultPdf = () => {
+interface FipeResultPdfProps {
+  data: VehicleDetails
+  variation?: {
+    texto: string;
+    isPositive: boolean;
+    sinal: string;
+  } | null;
+}
+
+export const FipeResultPdf = ({ data, variation }: FipeResultPdfProps) => {
   return (
     <Document>
       <Page
@@ -52,16 +62,12 @@ export const FipeResultPdf = () => {
               {formatDate()}
             </Text>
           </View>
-          <View style={styles.infoBox}>
-            <Text style={styles.infoLabel}>Total de Veículos</Text>
-            <Text style={styles.infoValue}>1</Text>
-          </View>
         </View>
 
         <View style={styles.card}>
           <View style={styles.vehicleHeader}>
             <Text style={styles.vehicleTitle}>
-              Chevrolet Vectra
+              {data.brand} {data.model}
             </Text>
           </View>
 
@@ -73,28 +79,35 @@ export const FipeResultPdf = () => {
           <View style={styles.tableRow}>
             <Text style={styles.tableCell}>Marca</Text>
             <Text style={[styles.tableCell, styles.highlightCell]}>
-              Chevrolet
+              {data.brand}
             </Text>
           </View>
 
           <View style={styles.tableRow}>
             <Text style={styles.tableCell}>Modelo</Text>
             <Text style={[styles.tableCell, styles.highlightCell]}>
-              Vectra
+              {data.model}
             </Text>
           </View>
 
           <View style={styles.tableRow}>
             <Text style={styles.tableCell}>Ano/Combustível</Text>
             <Text style={styles.tableCell}>
-              2000 Gasolina
+              {data.modelYear} ({data.fuel})
             </Text>
           </View>
 
           <View style={styles.tableRow}>
             <Text style={styles.tableCell}>Código FIPE</Text>
-            <Text style={styles.tableCell}>164433-7</Text>
+            <Text style={styles.tableCell}>{data.codeFipe}</Text>
           </View>
+
+          {variation && (
+            <View style={styles.tableRow}>
+              <Text style={styles.tableCell}>Variação da FIPE (Últimos 3 meses)</Text>
+              <Text style={styles.tableCell}>{variation.sinal} {variation.texto}</Text>
+            </View>
+          )}
 
           <View
             style={[styles.tableRow, { backgroundColor: '#f8fafc' }]}
@@ -103,7 +116,7 @@ export const FipeResultPdf = () => {
               Preço
             </Text>
             <Text style={[styles.tableCell, styles.priceCell]}>
-              R$ 23.600
+              {data.price}
             </Text>
           </View>
         </View>

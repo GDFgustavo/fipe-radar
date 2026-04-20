@@ -280,7 +280,14 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-@media (min-width: 768px) {
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+@media (min-width: 850px) {
     .hero {
         padding: 6rem 0;
     }
@@ -290,7 +297,7 @@
     }
 
     .heroGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         align-items: center;
     }
 

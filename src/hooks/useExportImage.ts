@@ -3,7 +3,7 @@ import { toPng } from "html-to-image"
 export const useExportImage = () => {
     const exportImage = async (
         element: HTMLElement,
-        fileName = "fiperadar-consulta.png"
+        fileName: string
     ) => {
         const dataUrl = await toPng(element, {
             pixelRatio: 2,
