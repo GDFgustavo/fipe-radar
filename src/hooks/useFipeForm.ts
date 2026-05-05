@@ -14,7 +14,7 @@ export function useFipeForm() {
     const { data: models, isLoading: isModelsLoading, isError: isModelsError, refetch: refetchModels } = useModels(vehicleType, brand ?? "")
     const { data: years, isLoading: isYearsLoading, isError: isYearsError, refetch: refetchYears } = useYears(vehicleType, brand ?? "", model ?? "")
     const { data: details, isLoading: isDetailsLoading, isError: isDetailsError, refetch: refetchDetails } = useFipeDetails(vehicleType, brand ?? "", model ?? "", year ?? "", shouldFetch)
-    const { data: history } = useFipeHistory(
+    const { data: history , isLoading: historyLoading} = useFipeHistory(
         vehicleType,
         shouldFetch ? details?.codeFipe ?? "" : "",
         shouldFetch ? year ?? "" : ""
@@ -101,6 +101,7 @@ export function useFipeForm() {
         history,
         isBrandsLoading,
         isDetailsLoading,
+        historyLoading,
         isLoadingAny,
         hasError,
         onVehicleChange: handleVehicleChange,

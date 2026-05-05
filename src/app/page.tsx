@@ -64,7 +64,7 @@ const stats = [
 
 export default function Home() {
   const fipe = useFipeForm()
-  const { isDetailsLoading, hasError, refetchAll, dismissError } = fipe
+  const { isDetailsLoading, historyLoading, hasError, refetchAll, dismissError } = fipe
   const { lastResult, setLastResult, clearLastResult } = useVehicleStore();
 
   const scrollToSection = (id: string) => {
@@ -147,7 +147,7 @@ export default function Home() {
               </div>
             )}
 
-            {!hasError && !isDetailsLoading && lastResult && (
+            {!hasError && !isDetailsLoading && !historyLoading && lastResult && (
               <FipeResult data={lastResult} onRemove={clearLastResult} />
             )}
 

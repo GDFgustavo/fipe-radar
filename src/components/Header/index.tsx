@@ -7,6 +7,7 @@ import styles from "./Header.module.scss"
 import Image from "next/image"
 import logo from '../../../public/fipe-logo.svg'
 import { usePathname } from "next/navigation"
+import { UserNav } from "../UserNav"
 
 const navigation = [
     { name: "Consulta", href: "/", icon: Car },
@@ -41,6 +42,9 @@ export function Header() {
                         )
                     })}
                 </nav>
+                <div className={styles.userNav}>
+                    <UserNav />
+                </div>
 
                 <button
                     className={styles.mobileButton}
@@ -72,6 +76,7 @@ export function Header() {
                                 </Link>
                             )
                         })}
+                        <UserNav isMobile={true} />
                     </nav>
                 </div>
             )}

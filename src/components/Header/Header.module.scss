@@ -50,11 +50,15 @@
     font-weight: 500;
 }
 
+.userNav {
+    display: none;
+}
+
 .navButton {
     display: inline-flex;
     align-items: center;
     padding: 8px;
-    gap: 1rem;
+    gap: 0.5rem;
     border-radius: 0.4rem;
     color: var(--foreground);
 }
@@ -111,6 +115,10 @@
     .navDesktop {
         display: flex;
         align-items: center;
+    }
+
+    .userNav {
+        display: flex;
     }
 
     .mobileButton {

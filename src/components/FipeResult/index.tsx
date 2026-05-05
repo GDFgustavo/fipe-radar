@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import {
     Calendar,
     Tag,
@@ -24,6 +24,7 @@ import { useFipeHistory } from "@/hooks/useFipe"
 import { useFipeVariation } from "@/hooks/useFipeVariation"
 import { formatFileName } from "@/utils/formatFileName"
 import { Spinner } from "../ui/Spinner"
+import { useClickOutside } from "@/hooks/useClickOutside"
 
 interface FipeResultProps {
     data: VehicleDetails
@@ -39,9 +40,9 @@ export function FipeResult({ data, onRemove }: FipeResultProps) {
     )
     const variation = useFipeVariation(history?.priceHistory);
     const fileName = formatFileName(data.brand, data.model);
-    const [isActive, setIsActive] = useState(false)
-    const dropdownRef = useRef<HTMLDivElement | null>(null)
+    const [isOpen, setIsOpen] = useState(false);
     const exportRef = useRef<HTMLDivElement | null>(null)
+    const dropdownRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
     const handleDownloadPDF = () => {
         exportPdf(<FipeResultPdf data={data} variation={variation} />, `${fileName}.pdf`)
@@ -51,21 +52,6 @@ export function FipeResult({ data, onRemove }: FipeResultProps) {
         if (!exportRef.current) return
         exportImage(exportRef.current, `${fileName}.png`)
     }
-
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (
-                dropdownRef.current &&
-                !dropdownRef.current.contains(event.target as Node)
-            ) {
-                setIsActive(false)
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside)
-        }
-    }, [])
 
     return (
         <>
@@ -83,11 +69,11 @@ export function FipeResult({ data, onRemove }: FipeResultProps) {
                         </div>
 
                         <div ref={dropdownRef} className={styles.dropdown}>
-                            <button onClick={() => setIsActive(prev => !prev)} type="submit" className={styles.fullButton}>
+                            <button onClick={() => setIsOpen(prev => !prev)} type="submit" className={styles.fullButton}>
                                 <Download className={styles.iconSm} />
                                 <span className={styles.export}>Exportar</span>
                             </button>
-                            <div className={`${styles.submenu} ${isActive ? styles.open : ''}`}>
+                            <div className={`${styles.submenu} ${isOpen ? styles.open : ''}`}>
                                 <button type="button" onClick={handleDownloadPDF} className={styles.primaryButton}>
                                     <FileText className={styles.iconSm} />
                                     Exportar PDF
@@ -192,7 +178,7 @@ export function FipeResult({ data, onRemove }: FipeResultProps) {
                     {historyLoading && (
                         <div className={styles.spinnerWrapper}>
                             <Spinner />
-                            <p>Buscando dados...</p>
+                            <p>Buscando histórico...</p>
                         </div>
                     )}
 

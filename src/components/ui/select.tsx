@@ -1,6 +1,6 @@
 "use client"
 
-import Select, { StylesConfig } from "react-select";
+import Select, { components, StylesConfig } from "react-select";
 
 type BaseOption = {
     label: string;
@@ -16,6 +16,10 @@ type SelectCustomProps<Option> = {
     isSearchable?: boolean;
     isDisabled?: boolean
 };
+
+const Input = (props: any) => (
+    <components.Input {...props} maxLength={100} />
+);
 
 function SelectCustom<Option extends BaseOption>({
     instanceId,
@@ -128,6 +132,7 @@ function SelectCustom<Option extends BaseOption>({
 
     return (
         <Select<Option, false>
+            components={{ Input }}
             instanceId={instanceId}
             value={value}
             onChange={(option) => onChange(option as Option | null)}
