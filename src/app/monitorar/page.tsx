@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import MonitorarView from "./MonitorarView";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: 'Monitoramento de Preços e Alertas de Variação',
@@ -50,7 +51,9 @@ export default function Page() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
-            <MonitorarView />
+            <Suspense fallback={null}>
+                <MonitorarView />
+            </Suspense>
         </>
     );
 }

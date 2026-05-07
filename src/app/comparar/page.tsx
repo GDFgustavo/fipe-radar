@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import CompararView from "./CompararView"
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: 'Comparar Veículos e Preços | Qual veículo vale mais a pena?',
@@ -50,7 +51,9 @@ export default function Page() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
-            <CompararView />
+            <Suspense fallback={null}>
+                <CompararView />
+            </Suspense>
         </>
     );
 }

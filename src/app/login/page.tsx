@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import LoginView from './LoginView';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
     title: 'FIPE Radar | Login',
@@ -29,5 +30,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-    return <LoginView />
+    return (
+        <Suspense fallback={null}>
+            <LoginView />
+        </Suspense>
+    )
 }
