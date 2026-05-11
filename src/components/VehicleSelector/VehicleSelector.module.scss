@@ -30,20 +30,20 @@
     padding: 1rem;
     border-radius: 0.5rem;
     border: 2px solid var(--border);
-    background: var(--background);
+    background: var(--card);
     color: var(--muted-foreground);
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
-        border-color: var(--primary);
-        background: var(--secondary);
+        border-color: var(--foreground);
+        background: var(--type-btn);
     }
 }
 
 .typeButtonActive {
-    border-color: var(--primary);
-    background: rgba(0, 0, 0, 0.03);
+    border-color: var(--foreground);
+    background: var(--type-btn);
     color: var(--foreground);
 }
 

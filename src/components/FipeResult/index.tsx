@@ -172,7 +172,7 @@ export function FipeResult({ data, onRemove }: FipeResultProps) {
                 <div className={styles.historySection}>
                     <div className={styles.historyHeader}>
                         <History className={styles.iconSmMuted} size={20} />
-                        <h3>Histórico de Preços (Últimos 3 meses)</h3>
+                        <h3 className={styles.historyTitle}>Histórico de Preços (Últimos 3 meses)</h3>
                     </div>
 
                     {historyLoading && (

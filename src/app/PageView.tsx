@@ -80,9 +80,6 @@ export default function PageView() {
     return (
         <div className={styles.page}>
             <section className={styles.hero}>
-                <div className={styles.heroBackground}>
-                    <div className={styles.heroOverlay} />
-                </div>
 
                 <div className={styles.container}>
                     <div className={styles.heroGrid}>

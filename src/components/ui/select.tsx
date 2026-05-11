@@ -34,35 +34,46 @@ function SelectCustom<Option extends BaseOption>({
         control: (provided) => ({
             ...provided,
             width: "100%",
-            backgroundColor: "#ffffff",
-            border: "1px solid #e5e7eb",
+            backgroundColor: "var(--card)",
+            border: "1px solid var(--border)",
             borderRadius: "8px",
             padding: "4px 4px",
             cursor: "pointer",
             fontSize: "14px",
+            "@media (max-width: 768px)": {
+                fontSize: "16px",
+            },
             fontWeight: 500,
             boxShadow: "none",
             transition: "all .2s ease",
             "&:hover": {
                 boxShadow: "none",
-                borderColor: "#d1d5db",
+                borderColor: "var(--foreground)",
             },
         }),
 
         singleValue: (provided) => ({
             ...provided,
-            color: "#111827",
+            color: "var(--foreground)",
+            fontSize: "14px",
+            "@media (max-width: 768px)": {
+                fontSize: "16px",
+            },
         }),
 
         input: (provided) => ({
             ...provided,
-            color: "#111827",
+            color: "var(--foreground)",
+            fontSize: "14px",
+            "@media (max-width: 768px)": {
+                fontSize: "16px",
+            },
         }),
 
         menu: (provided) => ({
             ...provided,
-            border: "1px solid #e5e7eb",
-            backgroundColor: "#ffffff",
+            border: "1px solid var(--border)",
+            backgroundColor: "var(--card)",
             marginTop: "8px",
             borderRadius: "8px",
             boxShadow: "0 4px 20px rgba(0,0,0,.12)",
@@ -74,19 +85,25 @@ function SelectCustom<Option extends BaseOption>({
             ...provided,
             padding: "12px 16px",
             fontSize: "14px",
+            "@media (max-width: 768px)": {
+                fontSize: "16px",
+            },
             cursor: "pointer",
             backgroundColor: state.isSelected
-                ? "#e5e7eb"
+                ? "var(--secondary)"
                 : state.isFocused
-                    ? "#f3f4f6"
+                    ? "var(--secondary)"
                     : "transparent",
-            color: "#111827",
-            transition: "all .15s ease",
+            color: "var(--foreground)",
+            transition: 'all 0.2s ease',
+            ':active': {
+                backgroundColor: 'var(--secondary)'
+            },
         }),
 
         placeholder: (provided) => ({
             ...provided,
-            color: "#9ca3af",
+            color: "var(--muted-foreground)",
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -98,15 +115,18 @@ function SelectCustom<Option extends BaseOption>({
 
         dropdownIndicator: (provided, state) => ({
             ...provided,
-            color: "#9ca3af",
+            color: "var(--muted-foreground)",
             padding: "4px",
             transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : "rotate(0)",
             transition: "transform .2s ease",
+            "&:hover": {
+                color: "var(--muted-foreground)"
+            }
         }),
 
         clearIndicator: (provided) => ({
             ...provided,
-            color: "#9ca3af",
+            color: "transparent",
         }),
 
         multiValue: (provided) => ({
@@ -117,7 +137,7 @@ function SelectCustom<Option extends BaseOption>({
 
         multiValueLabel: (provided) => ({
             ...provided,
-            color: "#111827",
+            color: "transparent",
         }),
 
         multiValueRemove: (provided) => ({

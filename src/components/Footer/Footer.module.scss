@@ -1,6 +1,6 @@
 .footer {
     border-top: 1px solid var(--border);
-    background: var(--secondary);
+    background: var(--footer);
 }
 
 .content {
@@ -38,6 +38,7 @@
 .logoSvg {
     width: 2rem;
     height: 2rem;
+    filter: var(--logo-filter);
 }
 
 .logoText {

@@ -8,13 +8,13 @@
     padding: 2rem;
     border-radius: 12px;
     border: 2px dashed var(--border);
-    background: var(--secondary);
+    background: var(--howItWorks);
     cursor: pointer;
     transition: 0.2s ease;
 }
 
 .emptySlot:hover {
-    border-color: rgba(0, 0, 0, 0.5);
+    border-color: var(--border-slot);
 }
 
 .emptyIconWrapper {
@@ -24,7 +24,7 @@
     width: 64px;
     height: 64px;
     border-radius: 999px;
-    background: rgb(238, 238, 238);
+    background: var(--slot-icon);
 }
 
 .emptyIcon {

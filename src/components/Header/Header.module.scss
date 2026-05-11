@@ -3,8 +3,8 @@
     top: 0;
     z-index: 50;
     width: 100%;
-    border-bottom: 1px solid var(--border);
-    background-color: var(--background);
+    box-shadow: rgba(72, 35, 35, 0.16) 0px 1px 4px;
+    background-color: var(--header-bg);
 }
 
 .content {
@@ -36,6 +36,7 @@
 .logoSvg {
     width: 2rem;
     height: 2rem;
+    filter: var(--logo-filter);
 }
 
 .logoText {
@@ -52,6 +53,8 @@
 
 .userNav {
     display: none;
+    align-items: center;
+    gap: 30px;
 }
 
 .navButton {
@@ -59,7 +62,7 @@
     align-items: center;
     padding: 8px;
     gap: 0.5rem;
-    border-radius: 0.4rem;
+    border-radius: 5px;
     color: var(--foreground);
 }
 
@@ -86,6 +89,7 @@
 }
 
 .iconLarge {
+    color: var(--foreground);
     width: 1.25rem;
     height: 1.25rem;
 }

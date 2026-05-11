@@ -27,13 +27,6 @@
 
 .dropdown {
     position: relative;
-
-    button {
-        &:hover {
-            background-color: var(--foreground);
-            color: var(--secondary);
-        }
-    }
 }
 
 .submenu {
@@ -160,10 +153,16 @@
     font-size: 14px;
     padding: 8px 10px;
     background: transparent;
+    color: var(--foreground);
     border-radius: 5px;
     border: 1px solid var(--border);
     box-shadow: rgba(72, 35, 35, 0.16) 0px 1px 4px;
     cursor: pointer;
+
+    &:hover {
+        background-color: var(--foreground);
+        color: var(--secondary);
+    }
 }
 
 .primaryButton {
@@ -174,10 +173,15 @@
     border: none;
     gap: 0.5rem;
     padding: 8px 8px;
+    color: var(--foreground);
     border-radius: 4px;
-    color: #000;
     background: transparent;
     cursor: pointer;
+
+    &:hover {
+        background-color: var(--foreground);
+        color: var(--secondary);
+    }
 }
 
 .iconSm {
@@ -214,6 +218,7 @@
     cursor: pointer;
     background-color: var(--card);
     border: 1px solid var(--border);
+    color: var(--foreground);
     transition: 0.2s ease;
     border-radius: 5px;
     padding: 0.5rem 0.5rem;
@@ -241,7 +246,7 @@
         align-items: center;
         gap: 0.5rem;
         margin-bottom: 1.25rem;
-        color: #1e293b;
+        color: var(--foreground);
 
         h3 {
             font-size: 1rem;
@@ -263,7 +268,7 @@
     align-items: flex-start;
     gap: 0.75rem;
     padding: 0.875rem 1.25rem;
-    background-color: #fff;
+    background-color: var(--card);
     border: 1px solid var(--border);
     border-radius: 0.75rem;
     transition: all 0.2s ease;
@@ -292,8 +297,8 @@
     justify-content: center;
     width: 30px;
     height: 30px;
-    background-color: #f3f4f6;
-    color: #6b7280;
+    background: var(--foreground);
+    color: var(--steps);
     border-radius: 50%;
     font-size: 0.8rem;
     font-weight: 700;
@@ -308,7 +313,7 @@
 .monthText {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #000;
+    color: var(--foreground);
     text-transform: capitalize;
 }
 

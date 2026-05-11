@@ -8,6 +8,7 @@ import Image from "next/image"
 import logo from '../../../public/fipe-logo.svg'
 import { usePathname } from "next/navigation"
 import { UserNav } from "../UserNav"
+import { ThemeToggle } from "../ThemeToggle"
 
 const navigation = [
     { name: "Consulta", href: "/", icon: Car },
@@ -44,6 +45,7 @@ export function Header() {
                 </nav>
                 <div className={styles.userNav}>
                     <UserNav />
+                    <ThemeToggle />
                 </div>
 
                 <button
@@ -77,6 +79,7 @@ export function Header() {
                             )
                         })}
                         <UserNav isMobile={true} />
+                        <ThemeToggle />
                     </nav>
                 </div>
             )}

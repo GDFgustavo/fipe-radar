@@ -9,8 +9,8 @@
 
 .alertDestructive {
     position: relative;
-    background-color: #fff;
-    border: 1px solid #000;
+    background-color: var(--card);
+    border: 1px solid var(--border);
     border-radius: 0.5rem;
     padding: 1rem;
 }
@@ -69,35 +69,13 @@
 }
 
 .btnPrimary {
-    background-color: #000000;
-    color: white;
+    background-color: var(--foreground);
+    color: var(--background);
     border: none;
 }
 
 .btnOutline {
     background-color: transparent;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     color: #ef4444;
-
-    &:hover {
-        background-color: #f8fafc;
-    }
-}
-
-.errorCodeBox {
-    margin-top: 0.5rem;
-    background-color: rgba(241, 245, 249, 0.5);
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-
-    p {
-        font-family: monospace;
-        font-size: 0.75rem;
-        color: #64748b;
-
-        span {
-            color: #0f172a;
-            font-weight: 600;
-        }
-    }
 }
