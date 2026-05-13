@@ -57,6 +57,23 @@ export function Footer() {
                             </li>
                         </ul>
                     </div>
+
+                    <div className={styles.column}>
+                        <h3 className={styles.heading}>Empresa</h3>
+                        <ul className={styles.list}>
+                            <li>
+                                <Link href="/termos" className={styles.link}>
+                                    Termos
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/privacidade" className={styles.link}>
+                                    Privacidade
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
 
                 <div className={styles.bottom}>

@@ -28,11 +28,13 @@
         .moon {
             display: block;
             animation: keyframes-fill 0.5s ease-out;
+            color: var(--theme-icon);
         }
 
         .sun {
             display: none;
             animation: keyframes-fill 0.5s ease-out;
+            color: var(--theme-icon);
         }
     }
 
