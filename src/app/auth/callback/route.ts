@@ -1,37 +1,35 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { createClient } from '@/utils/supabase/server'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/'
 
-  const response = NextResponse.redirect(`${origin}${next}?verified=true`)
-
   if (code) {
-    const cookieStore = await cookies()
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() { return cookieStore.getAll() },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              cookieStore.set(name, value, options)
-              response.cookies.set(name, value, options)
-            })
-          },
-        },
-      }
-    )
+    const supabase = await createClient()
     
+      const { data: { session } } = await supabase.auth.getSession();
+  
+    if (session) {
+    return NextResponse.redirect(`${origin}${next}`);
+    }
     const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (error) {
-        return NextResponse.redirect(`${origin}/login?error=invalid-code`)
+    
+    if (!error) {
+      let decodedNext = next
+      if (decodedNext.startsWith('%2F')) {
+        decodedNext = decodeURIComponent(decodedNext)
+      }
+
+      if (decodedNext.startsWith('/')) {
+        const urlFinal = `${origin}${decodedNext}`
+        return NextResponse.redirect(urlFinal)
+      }
+      
+      return NextResponse.redirect(`${origin}/login`)
     }
   }
-
-  return response
+  
+  return NextResponse.redirect(`${origin}/login`)
 }

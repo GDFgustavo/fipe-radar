@@ -10,29 +10,14 @@ import { useFipeForm } from '@/hooks/useFipeForm';
 import { Spinner } from '@/components/ui/Spinner';
 import { useVehicleStore } from '@/store/useVehicleStore';
 import { ApiErrorMessage } from '@/components/ApiErrorMensage';
+import FeatureSection from '@/components/FeatureSection';
 
 const features = [
-    {
-        icon: Search,
-        title: "Consulta Rápida",
-        description: "Encontre o valor FIPE de qualquer veículo em segundos com nossa busca simplificada.",
-    },
-    {
-        icon: BarChart2,
-        title: "Compare Veículos",
-        description: "Compare até 3 veículos lado a lado e tome decisões mais inteligentes.",
-    },
-    {
-        icon: Bell,
-        title: "Alertas de Preço",
-        description: "Receba notificações quando o veículo atingir o preço desejado.",
-    },
-    {
-        icon: Shield,
-        title: "Dados Confiáveis",
-        description: "Informações atualizadas diretamente da Tabela FIPE oficial.",
-    },
-]
+    { icon: Search, title: "Consulta Rápida", description: "Encontre o valor FIPE de qualquer veículo em segundos com nossa busca simplificada." },
+    { icon: BarChart2, title: "Compare Veículos", description: "Compare até 3 veículos lado a lado e tome decisões mais inteligentes." },
+    { icon: Bell, title: "Alertas de Preço", description: "Receba notificações quando o veículo atingir o preço desejado." },
+    { icon: Shield, title: "Dados Confiáveis", description: "Informações atualizadas diretamente da Tabela FIPE oficial.." },
+];
 
 const steps = [
     {
@@ -151,36 +136,11 @@ export default function PageView() {
                 </section>
             )}
 
-            <section className={styles.featuresSection}>
-                <div className={styles.container}>
-                    <div className={styles.sectionHeader}>
-                        <h2 className={styles.sectionTitle}>
-                            Tudo que você precisa para decidir
-                        </h2>
-                        <p className={styles.sectionDescription}>
-                            Ferramentas completas para consultar, comparar e acompanhar os
-                            valores de veículos no mercado brasileiro.
-                        </p>
-                    </div>
-
-                    <div className={styles.featuresGrid}>
-                        {features.map((feature) => (
-                            <div key={feature.title} className={styles.featureCard}>
-                                <div className={styles.featureContent}>
-                                    <div className={styles.featureIcon}>
-                                        <feature.icon className={styles.iconLarge} />
-                                    </div>
-                                    <h3 className={styles.featureTitle}>{feature.title}</h3>
-                                    <p className={styles.featureDescription}>
-                                        {feature.description}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-            </section>
+            <FeatureSection
+                sectionTitle="Tudo que você precisa para decidir"
+                sectionDescription="Ferramentas completas para consultar, comparar e acompanhar os valores de veículos no mercado brasileiro."
+                items={features}
+            />
 
             <section className={styles.howItWorks}>
                 <div className={styles.container}>

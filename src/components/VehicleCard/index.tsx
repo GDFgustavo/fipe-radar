@@ -1,9 +1,10 @@
 "use client"
 
-import { X, Car, Calendar, Tag, Fuel, Bike, Truck } from "lucide-react"
+import { X, Calendar, Tag, Fuel } from "lucide-react"
 import { VehicleDetails } from "@/types/vehicle"
 import styles from "./VehicleCard.module.scss"
 import { Spinner } from "../ui/Spinner"
+import { getVehicleIcon } from "@/utils/vehicleIcon"
 
 type Props = {
     vehicle?: VehicleDetails | null
@@ -12,17 +13,7 @@ type Props = {
 }
 
 export function VehicleCard({ vehicle, onRemove, isLoading }: Props) {
-    const typeIcon = () => {
-        if (vehicle?.vehicleType === 'cars') {
-            return <Car />
-        }
-        if (vehicle?.vehicleType === 'trucks') {
-            return <Truck />
-        }
-        if (vehicle?.vehicleType === 'motorcycles') {
-            return <Bike />
-        }
-    }
+    const icon = getVehicleIcon(vehicle?.vehicleType);
 
     if (isLoading || !vehicle) {
         return (
@@ -49,7 +40,7 @@ export function VehicleCard({ vehicle, onRemove, isLoading }: Props) {
                 <div className={styles.headerContent}>
                     <div className={styles.iconWrapper}>
                         <p className={styles.typeIcon}>
-                            {typeIcon()}
+                            {icon}
                         </p>
                     </div>
 

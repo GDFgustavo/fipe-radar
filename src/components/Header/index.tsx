@@ -1,19 +1,22 @@
 "use client"
 
-import Link from "next/link"
-import { Car, BarChart3, Target, Menu, X } from "lucide-react"
 import { useState } from "react"
-import styles from "./Header.module.scss"
 import Image from "next/image"
-import logo from '../../../public/fipe-logo.svg'
+import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Car, BarChart3, Menu, X, BellRing, Radar } from "lucide-react"
+
 import { UserNav } from "../UserNav"
 import { ThemeToggle } from "../ThemeToggle"
+
+import logo from '../../../public/fipe-logo.svg'
+import styles from "./Header.module.scss"
 
 const navigation = [
     { name: "Consulta", href: "/", icon: Car },
     { name: "Comparar", href: "/comparar", icon: BarChart3 },
-    { name: "Monitorar", href: "/monitorar", icon: Target },
+    { name: "Monitorar", href: "/monitorar", icon: Radar },
+    { name: "Meus Monitoramentos", href: "/meus-monitoramentos", icon: BellRing, mobileOnly: true }
 ]
 
 export function Header() {
@@ -33,15 +36,17 @@ export function Header() {
                 </Link>
 
                 <nav className={styles.navDesktop}>
-                    {navigation.map((item) => {
-                        const isActive = pathname === item.href
-                        return (
-                            <Link key={item.name} href={item.href} className={`${styles.navButton} ${isActive ? styles.active : styles.navHover}`}>
-                                <item.icon className={styles.icon} />
-                                {item.name}
-                            </Link>
-                        )
-                    })}
+                    {navigation
+                        .filter((item) => !item.mobileOnly)
+                        .map((item) => {
+                            const isActive = pathname === item.href
+                            return (
+                                <Link key={item.name} href={item.href} className={`${styles.navButton} ${isActive ? styles.active : styles.navHover}`}>
+                                    <item.icon className={styles.icon} />
+                                    {item.name}
+                                </Link>
+                            )
+                        })}
                 </nav>
                 <div className={styles.userNav}>
                     <UserNav />

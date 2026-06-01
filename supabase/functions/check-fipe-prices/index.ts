@@ -57,16 +57,18 @@ Deno.serve(async () => {
     return new Response("Erro ao buscar monitoramentos", { status: 500 })
   }
 
-  for (const alert of alerts) {
-    try {
-      const fipePrice = await getFipePrice(
-        alert.vehicle_type,
-        alert.brand,
-        alert.model,
-        alert.year
-      )
+for (const alert of alerts) {
+  try {
+    const fipePrice = await getFipePrice(
+      alert.vehicle_type,
+      alert.brand,
+      alert.model,
+      alert.year
+    )
 
-      console.log(`FIPE atual: ${fipePrice} | alvo: ${alert.target_price}`)
+    if (!fipePrice) continue;
+
+    console.log(`FIPE atual: ${fipePrice} | alvo: ${alert.target_price}`)
 
       const emailHtml = `<!DOCTYPE html>
 <html>
@@ -223,27 +225,36 @@ Deno.serve(async () => {
 
 </html>`
 
+const updateData: Record<string, any> = { 
+        current_price: fipePrice 
+}
 
-      if ((alert.price_trend === 'down' && fipePrice && fipePrice <= alert.target_price) ||
-        (alert.price_trend === 'up' && fipePrice && fipePrice >= alert.target_price)) {
-        await resend.emails.send({
-          from: "Fipe Radar <monitoring@fiperadar.site>",
-          to: alert.email,
-          subject: "🚗 Monitoramento de preço FIPE atingido!",
-          html: emailHtml,
-        })
+const hitTarget = (alert.price_trend === 'down' && fipePrice <= alert.target_price) ||
+    (alert.price_trend === 'up' && fipePrice >= alert.target_price);
 
-        await supabase
-          .from("price_alerts")
-          .update({ email_sent: true })
-          .eq("id", alert.id)
+    if (hitTarget) {
+    await resend.emails.send({
+        from: "Fipe Radar <monitoring@fiperadar.site>",
+        to: alert.email,
+        subject: "🚗 Monitoramento de preço FIPE atingido!",
+        html: emailHtml,
+    })
 
-        console.log(`📩 Email enviado para ${alert.email}`)
-      }
-    } catch (err) {
-      console.error("Erro ao processar monitoramento:", err)
+      // Se bateu a meta, além do preço, salvamos que o e-mail foi enviado
+    updateData.email_sent = true
+    console.log(`📩 Email enviado para ${alert.email}`)
     }
-  }
 
-  return new Response("Verificação concluída")
+    // 3. Atualiza o banco de dados (Sempre atualiza o preço atual!)
+    await supabase
+    .from("price_alerts")
+    .update(updateData)
+    .eq("id", alert.id)
+
+    } catch (err) {
+    console.error("Erro ao processar monitoramento:", err)
+    }
+}
+
+    return new Response("Verificação concluída")
 })

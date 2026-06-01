@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import Providers from "./providers";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,7 +60,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
-            <Header />
+            <Suspense fallback={null}>
+              <Header />
+            </Suspense>
             <main style={{ flex: 1 }}>
               {children}
             </main>

@@ -16,12 +16,16 @@ interface AuthFormProps {
     onSubmit: (e: React.FormEvent) => void;
     children: React.ReactNode;
     submitText: string;
+    isCaptchaVerified?: boolean;
+    cooldown?: number;
 }
 
 export default function AuthScreenShell({
     title, subtitle, cardTitle, cardSubtitle, status,
-    loading, onSubmit, children, submitText
+    loading, onSubmit, children, submitText, isCaptchaVerified, cooldown = 0
 }: AuthFormProps) {
+    const isButtonDisabled = loading || isCaptchaVerified === false || cooldown > 0;
+
     return (
         <div className={styles.pageContainer}>
             <div className={styles.authWrapper}>
@@ -49,8 +53,14 @@ export default function AuthScreenShell({
 
                         <form onSubmit={onSubmit} className={styles.authForm}>
                             {children}
-                            <button type="submit" className={styles.submitBtn} disabled={loading}>
-                                {loading ? <LoaderCircle className={styles.spinner} size={20} /> : submitText}
+                            <button type="submit" className={styles.submitBtn} disabled={isButtonDisabled}>
+                                {loading ? (
+                                    <LoaderCircle className={styles.spinner} size={20} />
+                                ) : isCaptchaVerified === false && cooldown === 0 ? (
+                                    <span>Verificando segurança...</span>
+                                ) : (
+                                    submitText
+                                )}
                             </button>
                         </form>
 

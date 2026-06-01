@@ -45,6 +45,10 @@
             display: flex;
         }
     }
+
+    &:hover {
+        background-color: var(--secondary);
+    }
 }
 
 :global([data-theme='dark']) {

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { LogOut, LogIn } from 'lucide-react'
 import styles from './UserNav.module.scss'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useClickOutside } from '@/hooks/useClickOutside'
@@ -35,19 +35,37 @@ const RenderAvatar = ({ userPhoto, userInitial }: { userPhoto?: string | null, u
 };
 
 export function UserNav({ isMobile = false }) {
-    const [user, setUser] = useState<any>(null)
-    const pathname = usePathname()
     const supabase = createClient()
+    const pathname = usePathname()
+    const [user, setUser] = useState<any>(null)
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
     const dropdownRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
     const userPhoto = user?.user_metadata?.avatar_url;
     const userInitial = user?.email?.charAt(0).toUpperCase();
+    const searchParams = useSearchParams()
 
+    const currentParams = searchParams.toString();
+    const returnPath = currentParams ? `${pathname}?${currentParams}` : pathname;
+    const loginUrl = `/login?redirect=${encodeURIComponent(returnPath)}`;
 
     useEffect(() => {
-        supabase.auth.getUser().then(({ data }) => setUser(data.user))
+        async function inicializarAutenticacao() {
+            try {
+                const { data } = await supabase.auth.getUser()
+                setUser(data.user)
+            } catch (error) {
+                console.error('Erro ao buscar usuário:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        inicializarAutenticacao()
+
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null)
+            setLoading(false)
         })
 
         return () => subscription.unsubscribe()
@@ -56,7 +74,9 @@ export function UserNav({ isMobile = false }) {
     if (isMobile) {
         return (
             <div className={styles.mobileWrapper}>
-                {user ? (
+                {loading ? (
+                    <div className={styles.menuItemSkeleton} />
+                ) : user ? (
                     <>
                         <div className={styles.userInfoMobile}>
                             <RenderAvatar key={userPhoto || 'default'} userPhoto={userPhoto} userInitial={userInitial} />
@@ -74,13 +94,21 @@ export function UserNav({ isMobile = false }) {
                         </button>
                     </>
                 ) : (
-                    <Link href={`/login?redirect=${pathname}`} className={styles.loginLinkMobile}>
+                    <Link href={loginUrl} className={styles.loginLinkMobile}>
                         <LogIn size={18} />
                         Entrar
                     </Link>
                 )}
             </div>
         );
+    }
+
+    if (loading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.avatarSkeleton} />
+            </div>
+        )
     }
 
     return (
@@ -98,6 +126,11 @@ export function UserNav({ isMobile = false }) {
                                 <p className={styles.infoEmail}>{user.email}</p>
                             </div>
                             <div className={styles.separator} />
+                            <Link href="/meus-monitoramentos">
+                                <button className={styles.menuItem}>
+                                    <span>Meus monitoramentos</span>
+                                </button>
+                            </Link>
                             <button
                                 className={styles.menuItem}
                                 onClick={() => supabase.auth.signOut()}
@@ -109,7 +142,7 @@ export function UserNav({ isMobile = false }) {
                     )}
                 </div>
             ) : (
-                <Link href={`/login?redirect=${pathname}`} className={styles.loginLink}>
+                <Link href={loginUrl} className={styles.loginLink}>
                     <LogIn size={16} />
                     Entrar
                 </Link>

@@ -19,6 +19,8 @@
   --footer: rgba(0, 0, 0, 0.03);
   --overlay: #ebebeb;
   --theme-icon: #000;
+  --status: #66666656;
+  --skeleton: linear-gradient(90deg, #dededee0 25%, #d4d4d4 50%, #dededee0 75%);
 }
 
 [data-theme='dark'] {
@@ -42,6 +44,8 @@
   --footer: rgba(20, 20, 20, 0.762);
   --overlay: #090909f3;
   --theme-icon: #fff;
+  --status: #8e8e8e39;
+  --skeleton: linear-gradient(90deg, #3e3e3eb3 25%, #74727272 50%, #3e3e3eb3 75%);
 }
 
 body {

@@ -37,6 +37,12 @@
             word-break: break-word;
         }
     }
+
+    .menuItemSkeleton {
+        padding: 0.5rem;
+        background: var(--secondary);
+        border-radius: 0.5rem;
+    }
 }
 
 .loginLinkMobile {

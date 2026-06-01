@@ -45,6 +45,7 @@ export default function ResetPassword() {
         setLoading(true);
         setStatus(null);
 
+        // 1. Pega o usuário logado (o link do e-mail fez isso por você)
         const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
@@ -53,16 +54,18 @@ export default function ResetPassword() {
             return;
         }
 
-        const recoveryTime = new Date(user.recovery_sent_at || 0).getTime();
-        const lastLoginTime = new Date(user.last_sign_in_at || 0).getTime();
-        const diffInSeconds = Math.abs(lastLoginTime - recoveryTime) / 1000;
-        const isActuallyRecovery = isVerifiedByUrl && diffInSeconds < 300 && user.app_metadata.provider === 'email';
+        if (!user.recovery_sent_at) {
+            setStatus({ type: 'error', message: 'Por favor, use o link enviado ao seu e-mail.' });
+            setLoading(false);
+            return;
+        }
 
-        if (!isActuallyRecovery) {
-            setStatus({
-                type: 'error',
-                message: 'Por favor, use o link enviado ao seu e-mail.'
-            });
+        const recoveryTime = new Date(user.recovery_sent_at).getTime();
+        const now = new Date().getTime();
+        const diffInMinutes = (now - recoveryTime) / 1000 / 60;
+
+        if (diffInMinutes > 20) {
+            setStatus({ type: 'error', message: 'Este link de recuperação expirou. Solicite um novo.' });
             setLoading(false);
             return;
         }

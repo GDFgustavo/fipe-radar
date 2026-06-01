@@ -9,4 +9,17 @@
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.icon {
+    flex-shrink: 0;
 }

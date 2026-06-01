@@ -143,6 +143,19 @@
         color: #dc2626;
     }
 
+    .statusMsg {
+        margin-top: 1rem;
+        text-align: center;
+
+        .success {
+            color: var(--foreground);
+        }
+
+        .error {
+            color: #dc2626;
+        }
+    }
+
     @media (min-width: 640px) {
         .monitorGrid {
             grid-template-columns: repeat(2, 1fr);
