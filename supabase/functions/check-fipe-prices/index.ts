@@ -73,148 +73,84 @@ for (const alert of alerts) {
       const emailHtml = `<!DOCTYPE html>
 <html>
 
-<body>
-    <table width="100%" cellpadding="0" cellspacing="0">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta de Preço Atingida!</title>
+</head>
+
+<body
+    style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; padding: 20px 0;">
         <tr>
             <td align="center">
-                <table width="600" bgColor="#fff" cellpadding="0" cellspacing="0">
+                <table width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0"
+                    style="max-width: 600px; background-color: #ffffff; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                     <tr>
-                        <td style="text-align:center; padding:32px; background-color: #0049e6; border-radius:8px;">
-                            <img src="https://servidor-estaticos-one-puce.vercel.app/fipe_logo_white.png" width="48"
-                                alt="FipeRadar" style="margin:0 auto 16px;" />
-                            <h1
-                                style="margin:0; font-size:24px; font-family:'Roboto', Arial, sans-serif; color:white; line-height:1.3;">
-                                🎯 Monitoramento FIPE Ativado!
-                            </h1>
-                            <p
-                                style="margin:10px 0 0 0; font-size:16px; font-family:'Roboto', Arial, sans-serif; color:white; opacity:0.9;">
-                                Seu veículo atingiu o preço alvo desejado
-                            </p>
+                        <td align="center" style="padding: 30px 20px; background-color: #fff;">
+                            <img src="https://servidor-estaticos-one-puce.vercel.app/fipe_logo_black.png"
+                                     alt="Fipe Radar"
+                                     width="40"
+                                     border="0"
+                                     style="display: block; width: 40px; max-width: 100%; height: auto; border: 0; outline: none; text-decoration: none; color: #000;" />
                         </td>
                     </tr>
-
                     <tr>
-                        <td height="24" style="font-size:20px; line-height:24px;">&nbsp;</td>
-                    </tr>
+                        <td style="padding: 40px 30px;">
+                            <h2
+                                style="margin: 0 0 16px 0; color: #000; font-size: 20px; font-weight: 700; line-height: 24px;">
+                                Boas notícias no seu Radar!</h2>
+                            <p style="margin: 0 0 24px 0; color: #666666; font-size: 16px; line-height: 24px;">O veículo
+                                que você estava monitorando sofreu uma alteração de preço na tabela FIPE e atingiu a
+                                meta configurada!</p>
 
-                    <tr>
-                        <td>
-                            <p
-                                style="color:#374151; font-size:18px; font-family:'Roboto', Arial, sans-serif; line-height:1.6; font-weight: bold; padding:0px 16px; margin: 0;">
-                                O preço Fipe chegou ao valor que você esperava.
-                            </p>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="16"
+                                style="background-color: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+                                <tr>
+                                    <td>
+                                        <p
+                                            style="color:#666666; font-size:15px; font-family:'Roboto', Arial, sans-serif; margin:0 0 8px 0;">
+                                            Marca:
+                                            <strong style="color: #000;"> ${alert.brand_name}</strong> 
+                                        </p>
+                                        <p
+                                            style="color:#666666; font-size:15px; font-family:'Roboto', Arial, sans-serif; margin:0 0 8px 0;">
+                                            Modelo:
+                                            <strong style="color: #000;"> ${alert.model_name}</strong> 
+                                        </p>
+                                        <p
+                                            style="color:#666666; font-size:15px; font-family:'Roboto', Arial, sans-serif; margin:0 0 8px 0;">
+                                            Ano:
+                                            <strong style="color: #000;"> ${alert.year_name}</strong> 
+                                        </p>
+                                        <p style="margin: 0 0 4px 0; color: #666666; font-size: 16px;">Seu preço
+                                            desejado: <strong style="color: #000;">R$ ${alert.target_price}</strong></p>
+                                        <p style="margin: 0; color: #666666; font-size: 15px; font-family:'Roboto', Arial, sans-serif;">Preço
+                                            atual na FIPE: 
+                                            <strong style=" color: #16a34a;">R$ ${alert.fipePrice}</strong>
+                                             </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="center" style="border-radius: 6px; background-color: #000; border: 1px solid #fff">
+                                        <a href="https://www.fiperadar.site/meus-monitoramentos" target="_blank"
+                                            style="display: inline-block; padding: 10px 28px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none; border-radius: 6px;">Ver
+                                            meus monitoramentos</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
-
                     <tr>
-                        <td height="24" style="font-size:20px; line-height:24px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td style="background-color:#f3f4f6; padding:12px 16px; border-radius:8px;">
-                            <p
-                                style="color:#374151; font-size:18px; font-family:'Roboto', Arial, sans-serif; font-weight: bold; margin:0 0 15px 0;">
-                                Veículo
-                                Monitorado
-                            </p>
-                            <p
-                                style="color:#374151; font-size:15px; font-family:'Roboto', Arial, sans-serif; margin:0 0 8px 0;">
-                                <strong>Marca:</strong> ${alert.brand_name}
-                            </p>
-                            <p
-                                style="color:#374151; font-size:15px; font-family:'Roboto', Arial, sans-serif; margin:0 0 8px 0;">
-                                <strong>Modelo:</strong> ${alert.model_name}
-                            </p>
-                            <p
-                                style="color:#374151; font-size:15px; font-family:'Roboto', Arial, sans-serif; margin:0;">
-                                <strong>Ano:</strong> ${alert.year_name}
-                            </p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="32" style="font-size:20px; line-height:32px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td
-                            style="text-align:center; background-color:#011f60; color:white; padding:20px; border-radius:8px;">
-                            <p style="font-size:16px; font-family:'Roboto', Arial, sans-serif; margin:0;">Seu preço alvo
-                                era</p>
-                            <strong
-                                style="font-size:20px; font-family:'Roboto', Arial, sans-serif;">R$
-                                ${alert.target_price}</strong>
-                            <p style="font-size:18px; margin:16px 0;">⬇️</p>
-                            <p style="font-size:16px; font-family:'Roboto', Arial, sans-serif; margin:0;">Preço Fipe
-                                atual</p>
-                            <strong
-                                style="font-size:20px; font-family:'Roboto', Arial, sans-serif;">R$
-                                ${fipePrice}</strong>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="32" style="font-size:20px; line-height:32px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td style="background:#fff3cd; padding:15px; border-radius:8px;">
-                            <h4
-                                style="margin:0 0 10px 0; font-size:16px; font-family:'Roboto', Arial, sans-serif; color:#333;">
-                                💡 Dica Importante</h4>
-                            <p
-                                style="margin:0; font-size:14px; font-family:'Roboto', Arial, sans-serif; color:#333; line-height:1.5;">
-                                Lembre-se que o preço FIPE é uma referência. Os preços de mercado podem variar conforme
-                                o estado do veículo, localização e outros fatores.
-                            </p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="32" style="font-size:20px; line-height:32px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td style="padding:0px 16px;">
-                            <p
-                                style="color:#374151; font-size:15px; font-family:'Roboto', Arial, sans-serif; line-height:1.6; margin: 0;">
-                                Se quiser, você pode visitar o veículo pessoalmente e verificar as condições reais.
-                                Caso deseje acompanhar outro veículo, basta ativar um novo monitoramento na plataforma.
-                            </p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="40" style="font-size:20px; line-height:40px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td style="text-align:center;">
-                            <a href="https://www.fiperadar.site/"
-                                style="background-color:#0049e6; color:white; font-size:16px; font-family:'Roboto', Arial, sans-serif; font-weight:bold; text-decoration: none; border-radius:4px; padding:12px 24px; text-align:center;">
-                                Acessar Fipe Radar
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td height="40" style="font-size:20px; line-height:40px;">&nbsp;</td>
-                    </tr>
-
-                    <tr>
-                        <td style="padding: 16px;">
-                            <p
-                                style="color:#9ca3af; font-size:13px; font-family:'Roboto', Arial, sans-serif; text-align:center; line-height:1.5;">
-                                Este e-mail foi enviado automaticamente pelo sistema do
-                                <strong>FipeRadar</strong>.
-                                <br />Você está recebendo este alerta porque cadastrou um monitoramento de preço na
-                                plataforma.
-                            </p>
-                            <p
-                                style="font-size:13px; font-family:'Roboto', Arial, sans-serif; color:#9ca3af; text-align:center; padding-top: 10px;">
-                                © 2025 FipeRadar — Todos os direitos reservados.<br />
-                                Este é um e-mail automático, não responda.
-                            </p>
+                        <td align="center"
+                            style="padding: 20px; background-color: #fff; border-top: 1px solid #e2e8f0;">
+                            <p style="margin: 0; color: #666666; font-size: 12px; line-height: 16px;">Você recebeu este
+                                e-mail porque configurou um alerta de preço no Fipe Radar.</p>
+                            <p style="margin: 6px 0 0 0; color: #666666; font-size: 12px; line-height: 16px;">&copy;
+                                2026 Fipe Radar. Todos os direitos reservados.</p>
                         </td>
                     </tr>
                 </table>
@@ -240,12 +176,10 @@ const hitTarget = (alert.price_trend === 'down' && fipePrice <= alert.target_pri
         html: emailHtml,
     })
 
-      // Se bateu a meta, além do preço, salvamos que o e-mail foi enviado
     updateData.email_sent = true
     console.log(`📩 Email enviado para ${alert.email}`)
     }
 
-    // 3. Atualiza o banco de dados (Sempre atualiza o preço atual!)
     await supabase
     .from("price_alerts")
     .update(updateData)
