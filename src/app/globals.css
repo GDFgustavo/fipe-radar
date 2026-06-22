@@ -20,6 +20,7 @@
   --overlay: #ebebeb;
   --theme-icon: #000;
   --status: #66666656;
+  --section: #f2f2f2;
   --skeleton: linear-gradient(90deg, #dededee0 25%, #d4d4d4 50%, #dededee0 75%);
 }
 
@@ -45,7 +46,12 @@
   --overlay: #090909f3;
   --theme-icon: #fff;
   --status: #8e8e8e39;
+  --section: #0c0c0c;
   --skeleton: linear-gradient(90deg, #3e3e3eb3 25%, #74727272 50%, #3e3e3eb3 75%);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

@@ -1,16 +1,20 @@
 'use client'
 
-import { formatMonthYear } from '@/utils/formatDate';
-import styles from './page.module.scss'
 import { BarChart2, Bell, Clock, Search, Shield, TrendingUp } from "lucide-react"
+import { useVehicleStore } from '@/store/useVehicleStore';
+
 import { VehicleSelector } from '@/components/VehicleSelector';
 import { Button } from '@/components/Button';
 import { FipeResult } from '@/components/FipeResult';
-import { useFipeForm } from '@/hooks/useFipeForm';
 import { Spinner } from '@/components/ui/Spinner';
-import { useVehicleStore } from '@/store/useVehicleStore';
 import { ApiErrorMessage } from '@/components/ApiErrorMensage';
 import FeatureSection from '@/components/FeatureSection';
+import BrandScrolling from '@/components/BrandScrolling';
+
+import { useFipeForm } from '@/hooks/useFipeForm';
+import { scrollSmooth } from '@/utils/scrollSmooth';
+import { formatMonthYear } from '@/utils/formatDate';
+import styles from './page.module.scss'
 
 const features = [
     { icon: Search, title: "Consulta Rápida", description: "Encontre o valor FIPE de qualquer veículo em segundos com nossa busca simplificada." },
@@ -48,18 +52,18 @@ const stats = [
 
 export default function PageView() {
     const fipe = useFipeForm()
-    const { isDetailsLoading, historyLoading, hasError, refetchAll, dismissError } = fipe
+    const { fillForm, isDetailsLoading, historyLoading, hasError, refetchAll, dismissError } = fipe
     const { lastResult, setLastResult, clearLastResult } = useVehicleStore();
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id)
-        element?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    const handleSearch = async (id: string) => {
+    const scrollToResult = async () => {
         const result = await fipe.onSubmit();
-        scrollToSection(id)
+        scrollSmooth("result", 60)
         if (result) setLastResult(result);
+    }
+
+    const scrollToHero = (type: string, code: string,) => {
+        fillForm(type, code, "", "")
+        scrollSmooth("hero", 140)
     }
 
     return (
@@ -96,7 +100,7 @@ export default function PageView() {
                             </div>
                         </div>
 
-                        <div className={styles.heroCardWrapper}>
+                        <div id="hero" className={styles.heroCardWrapper}>
                             <div className={styles.heroCard}>
                                 <div className={styles.cardContent}>
                                     <div className={styles.cardHeader}>
@@ -106,7 +110,7 @@ export default function PageView() {
                                         </p>
                                     </div>
                                     <VehicleSelector {...fipe} />
-                                    <Button onClick={() => handleSearch('result')} textButton="Consultar Valor FIPE" />
+                                    <Button onClick={scrollToResult} textButton="Consultar Valor FIPE" />
                                 </div>
                             </div>
                         </div>
@@ -141,6 +145,13 @@ export default function PageView() {
                 sectionDescription="Ferramentas completas para consultar, comparar e acompanhar os valores de veículos no mercado brasileiro."
                 items={features}
             />
+
+            <div className={styles.brandScrollingContainer}>
+                <div className={styles.container}>
+                    <p className={styles.sectionDescription}>Mais de 80 fabricantes monitoradas em tempo real</p>
+                    <BrandScrolling onSelect={(type, code) => scrollToHero(type, code)} />
+                </div>
+            </div>
 
             <section className={styles.howItWorks}>
                 <div className={styles.container}>

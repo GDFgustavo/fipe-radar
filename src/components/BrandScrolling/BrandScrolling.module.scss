@@ -1,0 +1,111 @@
+.container {
+    width: 100%;
+    padding: 2rem 0 0rem;
+}
+
+.brandCard {
+    background: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 2.25rem;
+    margin: 10px 0.75rem;
+    min-width: 150px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+    background-color: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        background-color: var(--foreground);
+        border-color: var(--foreground);
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 3px 8px;
+
+        .brandName {
+            color: var(--background);
+        }
+    }
+}
+
+.brandName {
+    font-size: 0.813rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--foreground);
+    transition: color 0.2s ease;
+}
+
+.brandCard {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.skeletonTrack {
+    display: flex;
+    justify-content: center;
+    gap: 1.75rem;
+    overflow: hidden;
+    padding: 11px;
+    width: 100%;
+}
+
+.brandCardSkeleton {
+    min-width: 160px;
+    height: 40px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--skeleton);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background-size: 200% 100%;
+    animation: shimmer 1.6s infinite linear;
+    flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 1.5rem 0 0;
+    }
+
+    .brandCard {
+        padding: 0.625rem 1.5rem;
+        min-width: 120px;
+        margin: 4px 0.5rem;
+    }
+
+    .brandName {
+        font-size: 0.75rem;
+    }
+
+    .brandCardSkeleton {
+        padding: 0.625rem 1.5rem;
+        min-width: 120px;
+        height: 34px;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(3px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
