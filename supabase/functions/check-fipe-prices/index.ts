@@ -127,7 +127,7 @@ for (const alert of alerts) {
                                             desejado: <strong style="color: #000;">R$ ${alert.target_price}</strong></p>
                                         <p style="margin: 0; color: #666666; font-size: 15px; font-family:'Roboto', Arial, sans-serif;">Preço
                                             atual na FIPE: 
-                                            <strong style=" color: #16a34a;">R$ ${alert.fipePrice}</strong>
+                                            <strong style=" color: #16a34a;">R$ ${alert.current_price}</strong>
                                              </p>
                                     </td>
                                 </tr>
@@ -162,7 +162,7 @@ for (const alert of alerts) {
 </html>`
 
 const updateData: Record<string, any> = { 
-        current_price: fipePrice 
+        current_price: fipePrice
 }
 
 const hitTarget = (alert.price_trend === 'down' && fipePrice <= alert.target_price) ||

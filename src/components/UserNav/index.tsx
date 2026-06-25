@@ -1,13 +1,19 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/utils/supabase/client'
-import { LogOut, LogIn } from 'lucide-react'
-import styles from './UserNav.module.scss'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { LogOut, LogIn } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+
 import { useClickOutside } from '@/hooks/useClickOutside'
+import { createClient } from '@/utils/supabase/client'
+import styles from './UserNav.module.scss'
+
+interface UserNavProps {
+    isMobile?: boolean;
+    isNavbarVisible?: boolean;
+}
 
 const RenderAvatar = ({ userPhoto, userInitial }: { userPhoto?: string | null, userInitial: string }) => {
     const [hasError, setHasError] = useState(false);
@@ -34,16 +40,19 @@ const RenderAvatar = ({ userPhoto, userInitial }: { userPhoto?: string | null, u
     );
 };
 
-export function UserNav({ isMobile = false }) {
+export function UserNav({ isMobile = false, isNavbarVisible = true }: UserNavProps) {
     const supabase = createClient()
     const pathname = usePathname()
+    const searchParams = useSearchParams()
+
     const [user, setUser] = useState<any>(null)
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+
     const dropdownRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
+
     const userPhoto = user?.user_metadata?.avatar_url;
     const userInitial = user?.email?.charAt(0).toUpperCase();
-    const searchParams = useSearchParams()
 
     const currentParams = searchParams.toString();
     const returnPath = currentParams ? `${pathname}?${currentParams}` : pathname;
@@ -69,7 +78,13 @@ export function UserNav({ isMobile = false }) {
         })
 
         return () => subscription.unsubscribe()
-    }, [])
+    }, [supabase])
+
+    useEffect(() => {
+        if (!isNavbarVisible) {
+            setIsOpen(false);
+        }
+    }, [isNavbarVisible]);
 
     if (isMobile) {
         return (
@@ -81,14 +96,10 @@ export function UserNav({ isMobile = false }) {
                         <div className={styles.userInfoMobile}>
                             <RenderAvatar key={userPhoto || 'default'} userPhoto={userPhoto} userInitial={userInitial} />
                             <div className={styles.textDetails}>
-                                <p className={styles.infoName}>{user.name}</p>
                                 <p className={styles.infoEmail}>{user.email}</p>
                             </div>
                         </div>
-                        <button
-                            className={`${styles.menuItem} ${styles.destructive}`}
-                            onClick={() => supabase.auth.signOut()}
-                        >
+                        <button className={`${styles.menuItem} ${styles.destructive}`} onClick={() => supabase.auth.signOut()}>
                             <LogOut size={16} />
                             <span>Sair</span>
                         </button>
@@ -103,26 +114,19 @@ export function UserNav({ isMobile = false }) {
         );
     }
 
-    if (loading) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.avatarSkeleton} />
-            </div>
-        )
-    }
-
     return (
         <div className={styles.container}>
-            {user ? (
+            {loading ? (
+                <div className={styles.avatarSkeleton} />
+            ) : user ? (
                 <div ref={dropdownRef} className={styles.dropdownWrapper}>
                     <button className={styles.trigger} onClick={() => setIsOpen(prev => !prev)}>
                         <RenderAvatar key={userPhoto || 'default'} userPhoto={userPhoto} userInitial={userInitial} />
                     </button>
 
                     {isOpen && (
-                        <div className={styles.menuContent}>
+                        <div className={`${styles.menuContent} ${styles.isOpen}`}>
                             <div className={styles.userInfo}>
-                                <p className={styles.infoName}>{user.name}</p>
                                 <p className={styles.infoEmail}>{user.email}</p>
                             </div>
                             <div className={styles.separator} />
@@ -131,10 +135,7 @@ export function UserNav({ isMobile = false }) {
                                     <span>Meus monitoramentos</span>
                                 </button>
                             </Link>
-                            <button
-                                className={styles.menuItem}
-                                onClick={() => supabase.auth.signOut()}
-                            >
+                            <button className={styles.menuItem} onClick={() => supabase.auth.signOut()}>
                                 <LogOut size={16} />
                                 <span>Sair</span>
                             </button>

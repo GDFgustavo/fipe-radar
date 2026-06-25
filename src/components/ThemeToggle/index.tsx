@@ -16,7 +16,13 @@ export function ThemeToggle() {
     }, [])
 
     if (!mounted) {
-        return <div className={styles.placeholder} />
+        return (
+            <div className={`${styles.themeContainer} ${styles.placeholder}`}>
+                <button type="button" className={styles.themeButton} disabled>
+                    <div className={styles.iconSkeleton} />
+                </button>
+            </div>
+        )
     }
 
     const toggleTheme = () => {

@@ -48,6 +48,28 @@
 
     &:hover {
         background-color: var(--secondary);
+        transition: 0.2s ease;
+    }
+}
+
+
+.placeholder {
+    pointer-events: none;
+
+    .iconSkeleton {
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        background-color: var(--border);
+        opacity: 0.6;
+    }
+
+    .modeSkeleton {
+        color: transparent !important;
+        background-color: var(--border);
+        border-radius: 4px;
+        opacity: 0.4;
+        user-select: none;
     }
 }
 

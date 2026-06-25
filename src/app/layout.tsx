@@ -63,7 +63,7 @@ export default function RootLayout({
             <Suspense fallback={null}>
               <Header />
             </Suspense>
-            <main style={{ flex: 1 }}>
+            <main className="main-content">
               {children}
             </main>
             <Footer />

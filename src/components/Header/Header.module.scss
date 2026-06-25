@@ -1,13 +1,22 @@
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 50;
     width: 100%;
     box-shadow: rgba(72, 35, 35, 0.16) 0px 1px 4px;
     background-color: var(--header-bg);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(0);
+
+    &.hidden {
+        transform: translateY(-100%);
+    }
 }
 
 .content {
+    position: relative;
+    z-index: 2;
+    background-color: var(--header-bg);
     max-width: 1280px;
     height: 4rem;
     padding: 1rem;
@@ -69,12 +78,14 @@
 .active {
     background: var(--secondary);
     color: var(--foreground);
+    transition: 0.2s ease;
 }
 
 .navHover {
     &:hover {
         color: var(--secondary);
         background-color: var(--foreground);
+        transition: 0.2s ease;
     }
 }
 
@@ -95,7 +106,23 @@
 }
 
 .mobileMenu {
-    border-top: 1px solid var(--border);
+    position: absolute;
+    top: 4rem;
+    width: 100%;
+    background-color: var(--header-bg);
+    z-index: 1;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease-in-out,
+        opacity 0.3s ease-in-out;
+
+    &.isOpen {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
 }
 
 .navMobile {
