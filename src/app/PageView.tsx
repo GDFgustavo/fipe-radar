@@ -15,6 +15,7 @@ import { useFipeForm } from '@/hooks/useFipeForm';
 import { scrollSmooth } from '@/utils/scrollSmooth';
 import { formatMonthYear } from '@/utils/formatDate';
 import styles from './page.module.scss'
+import { Hero } from "@/components/Hero";
 
 const features = [
     { icon: Search, title: "Consulta Rápida", description: "Encontre o valor FIPE de qualquer veículo em segundos com nossa busca simplificada." },
@@ -69,6 +70,7 @@ export default function PageView() {
     return (
         <div className={styles.page}>
             <section className={styles.hero}>
+                <Hero />
 
                 <div className={styles.container}>
                     <div className={styles.heroGrid}>
