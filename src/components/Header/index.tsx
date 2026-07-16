@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Car, BarChart3, Menu, X, BellRing, Radar } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 import { UserNav } from "../UserNav"
 import { ThemeToggle } from "../ThemeToggle"
@@ -13,10 +13,10 @@ import logo from '../../../public/fipe-logo.svg'
 import styles from "./Header.module.scss"
 
 const navigation = [
-    { name: "Consulta", href: "/", icon: Car },
-    { name: "Comparar", href: "/comparar", icon: BarChart3 },
-    { name: "Monitorar", href: "/monitorar", icon: Radar },
-    { name: "Meus Monitoramentos", href: "/meus-monitoramentos", icon: BellRing, mobileOnly: true }
+    { name: "Consulta", href: "/" },
+    { name: "Comparar", href: "/comparar" },
+    { name: "Monitorar", href: "/monitorar" },
+    { name: "Meus Monitoramentos", href: "/meus-monitoramentos", mobileOnly: true }
 ]
 
 export function Header() {
@@ -79,7 +79,6 @@ export function Header() {
                             const isActive = pathname === item.href
                             return (
                                 <Link key={item.name} href={item.href} className={`${styles.navButton} ${isActive ? styles.active : styles.navHover}`}>
-                                    <item.icon className={styles.icon} />
                                     {item.name}
                                 </Link>
                             )
@@ -107,7 +106,6 @@ export function Header() {
                                 onClick={() => setMobileMenuOpen(false)}
                                 className={`${styles.navButton} ${isActive ? styles.active : styles.navHover}`}
                             >
-                                <item.icon className={styles.icon} />
                                 {item.name}
                             </Link>
                         )

@@ -213,11 +213,10 @@
     color: var(--foreground);
 
     &:hover {
-        &:hover {
-            background-color: var(--foreground);
-            color: var(--secondary);
-        }
+        background-color: var(--foreground);
+        color: var(--secondary);
     }
+
 }
 
 @keyframes pulse {

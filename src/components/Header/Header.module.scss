@@ -83,8 +83,7 @@
 
 .navHover {
     &:hover {
-        color: var(--secondary);
-        background-color: var(--foreground);
+        color: var(--foreground);
         transition: 0.2s ease;
     }
 }
@@ -92,17 +91,6 @@
 .mobileButton {
     background: transparent;
     border: none;
-}
-
-.icon {
-    width: 1rem;
-    height: 1rem;
-}
-
-.iconLarge {
-    color: var(--foreground);
-    width: 1.25rem;
-    height: 1.25rem;
 }
 
 .mobileMenu {
@@ -146,6 +134,61 @@
     .navDesktop {
         display: flex;
         align-items: center;
+    }
+
+    .navButton {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 8px;
+        margin-right: 16px;
+        color: var(--foreground);
+    }
+
+    .active {
+        background-color: transparent;
+        color: var(--foreground);
+        transition: 0.2s ease;
+
+        &::after {
+            content: "";
+            position: absolute;
+            height: 1.5px;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            background-color: var(--foreground);
+            transition: all 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+
+    }
+
+    .navHover {
+        background-color: transparent;
+
+        &::after {
+            content: "";
+            position: absolute;
+            height: 1.5px;
+            width: 0;
+            bottom: 0;
+            left: 0;
+            background-color: var(--foreground);
+            transition: all 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+
+        &:hover {
+            color: var(--foreground);
+            background-color: transparent;
+        }
     }
 
     .userNav {
