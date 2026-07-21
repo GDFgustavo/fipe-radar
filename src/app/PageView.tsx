@@ -1,6 +1,6 @@
 'use client'
 
-import { BarChart2, Bell, Clock, Search, Shield, TrendingUp } from "lucide-react"
+import { Clock, TrendingUp } from "lucide-react"
 import { useVehicleStore } from '@/store/useVehicleStore';
 
 import { VehicleSelector } from '@/components/VehicleSelector';
@@ -8,7 +8,7 @@ import { Button } from '@/components/Button';
 import { FipeResult } from '@/components/FipeResult';
 import { Spinner } from '@/components/ui/Spinner';
 import { ApiErrorMessage } from '@/components/ApiErrorMensage';
-import FeatureSection from '@/components/FeatureSection';
+import ResourcesSection from '@/components/ResourcesSection';
 import BrandScrolling from '@/components/BrandScrolling';
 
 import { useFipeForm } from '@/hooks/useFipeForm';
@@ -16,13 +16,6 @@ import { scrollSmooth } from '@/utils/scrollSmooth';
 import { formatMonthYear } from '@/utils/formatDate';
 import styles from './page.module.scss'
 import { Hero } from "@/components/Hero";
-
-const features = [
-    { icon: Search, title: "Consulta Rápida", description: "Encontre o valor FIPE de qualquer veículo em segundos com nossa busca simplificada." },
-    { icon: BarChart2, title: "Compare Veículos", description: "Compare até 3 veículos lado a lado e tome decisões mais inteligentes." },
-    { icon: Bell, title: "Alertas de Preço", description: "Receba notificações quando o veículo atingir o preço desejado." },
-    { icon: Shield, title: "Dados Confiáveis", description: "Informações atualizadas diretamente da Tabela FIPE oficial.." },
-];
 
 const steps = [
     {
@@ -78,7 +71,7 @@ export default function PageView() {
                             <div className={styles.badge}>
                                 <TrendingUp className={styles.badgeIcon} />
                                 <span>
-                                    {formatMonthYear(new Date())}
+                                    Atualizado em {formatMonthYear(new Date())}
                                 </span>
                             </div>
 
@@ -142,15 +135,13 @@ export default function PageView() {
                 </section>
             )}
 
-            <FeatureSection
-                sectionTitle="Tudo que você precisa para decidir"
-                sectionDescription="Ferramentas completas para consultar, comparar e acompanhar os valores de veículos no mercado brasileiro."
-                items={features}
+            <ResourcesSection
+                onClick={() => scrollSmooth("hero", 140)}
             />
 
             <div className={styles.brandScrollingContainer}>
                 <div className={styles.container}>
-                    <p className={styles.sectionDescription}>Mais de 80 fabricantes monitoradas em tempo real</p>
+                    <p className={styles.sectionDescription}>Cobertura completa de marcas nacionais e importadas</p>
                     <BrandScrolling onSelect={(type, code) => scrollToHero(type, code)} />
                 </div>
             </div>

@@ -1,24 +1,17 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { Car, Target, Mail, TrendingUp, TrendingDown, Search, ChartNoAxesCombined } from "lucide-react";
+import { Car, Target, Mail, TrendingUp, TrendingDown } from "lucide-react";
 import { NumericFormat } from "react-number-format";
 
 import { VehicleSelector } from "@/components/VehicleSelector";
 import { Button } from "@/components/Button";
 import { ApiErrorMessage } from "@/components/ApiErrorMensage";
-import FeatureSection from "@/components/FeatureSection";
 import Modal from "@/components/Modal";
 
 import { useMonitoringForm } from "@/hooks/useMonitoringForm";
 import { createClient } from "@/utils/supabase/client";
 import styles from './Monitorar.module.scss';
-
-const MONITORING_FEATURES = [
-    { icon: Search, title: "Como Funciona", description: "Selecione o tipo do veículo, marca, modelo e ano  que você está de olho para comprar ou querendo vender." },
-    { icon: Target, title: "Defina sua Meta", description: "Diga ao sistema qual o valor ideal para você. Nós cruzamos os dados para você não perder o momento certo." },
-    { icon: ChartNoAxesCombined, title: "Acompanhe a Tendência", description: "Veja se o preço está subindo ou caindo através de alertas automáticos direto na sua caixa de entrada." },
-];
 
 function MonitoringForm({ user, onRequireAuth }: { user: any; onRequireAuth: () => void }) {
     const {
@@ -135,12 +128,6 @@ export default function MonitorarView() {
 
     return (
         <>
-            <FeatureSection
-                sectionTitle="Monitore Preços de Veículos"
-                sectionDescription="Defina um preço alvo e receba alertas automáticos."
-                items={MONITORING_FEATURES}
-            />
-
             <div className={styles.section}>
                 <div className={styles.container}>
                     <div className={styles.card}>

@@ -2,7 +2,7 @@ export function formatMonthYear(date: Date) {
     const month = date.toLocaleDateString("pt-BR", { month: "long" })
     const year = date.getFullYear()
 
-    return `${`Atualizado em ${month}`} ${year}`
+    return `${month} ${year}`
 }
 
 export function formatDate() {
