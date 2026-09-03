@@ -4,6 +4,7 @@
   --logo-filter: none;
   --header-bg: #ffffff;
   --card: #ffffff;
+  --monitoring-card-3: #9c9b9b;
   --secondary: #eaeaea;
   --muted-foreground: #666666;
   --border: #dedede;
@@ -30,6 +31,7 @@
   --logo-filter: invert(1);
   --header-bg: rgb(0, 0, 0);
   --card: hsla(0, 0%, 4%, 1);
+  --monitoring-card-3: #393939;
   --secondary: #1f1f1f;
   --muted-foreground: #8e8e8e;
   --border: #2f2f2f;

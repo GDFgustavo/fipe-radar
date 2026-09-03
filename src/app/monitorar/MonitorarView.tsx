@@ -1,148 +1,91 @@
-"use client"
+import Image from "next/image";
+import { Plus } from "lucide-react";
 
-import { useState, useEffect } from "react";
-import { Car, Target, Mail, TrendingUp, TrendingDown } from "lucide-react";
-import { NumericFormat } from "react-number-format";
+import monitoringCreate from "../../../public/monitoring-create.png";
+import monitoringActive from "../../../public/monitoring-active.png";
+import monitoringAlert from "../../../public/monitoring-alert.png";
 
-import { VehicleSelector } from "@/components/VehicleSelector";
 import { Button } from "@/components/Button";
-import { ApiErrorMessage } from "@/components/ApiErrorMensage";
-import Modal from "@/components/Modal";
-
-import { useMonitoringForm } from "@/hooks/useMonitoringForm";
-import { createClient } from "@/utils/supabase/client";
-import styles from './Monitorar.module.scss';
-
-function MonitoringForm({ user, onRequireAuth }: { user: any; onRequireAuth: () => void }) {
-    const {
-        fipe, email, priceTrend, setPriceTrend,
-        targetPrice, setTargetPrice, loading, statusMsg,
-        handleCreateMonitoring, MIN_VALUE
-    } = useMonitoringForm(user, onRequireAuth);
-
-    return (
-        <>
-            {fipe.hasError && (
-                <div style={{ marginBottom: '1.5rem' }}>
-                    <ApiErrorMessage onRetry={fipe.refetchAll} onDismiss={fipe.dismissError} />
-                </div>
-            )}
-
-            <div className={styles.cardSubtitle}>
-                <div className={styles.icon}><Car size={16} /></div>
-                <h2>Detalhes do veículo</h2>
-            </div>
-
-            <VehicleSelector {...fipe} />
-
-            <div className={styles.monitorGrid}>
-                <div className={styles.field}>
-                    <div className={styles.cardSubtitle}>
-                        <div className={styles.icon}><Target size={16} /></div>
-                        <h2>Preço alvo</h2>
-                    </div>
-                    <label className={styles.label}>Preço alvo (Mínimo: R$ 1.000)</label>
-                    <div className={styles.inputWrapper}>
-                        <span className={styles.prefix}>R$</span>
-                        <NumericFormat
-                            value={targetPrice}
-                            onValueChange={(values) => setTargetPrice(Number(values.value))}
-                            onBlur={() => targetPrice < MIN_VALUE && setTargetPrice(MIN_VALUE)}
-                            thousandSeparator="." decimalSeparator="," decimalScale={0} allowNegative={false}
-                            className={styles.input}
-                        />
-                    </div>
-                </div>
-
-                <div className={styles.field}>
-                    <label className={styles.label}>Notificar quando</label>
-                    <div className={styles.trendButtons}>
-                        <button
-                            type="button"
-                            className={`${styles.trendButton} ${priceTrend === "up" ? styles.trendUp : ""}`}
-                            onClick={() => setPriceTrend("up")}
-                        >
-                            <TrendingUp size={16} /> Aumentar preço
-                        </button>
-                        <button
-                            type="button"
-                            className={`${styles.trendButton} ${priceTrend === "down" ? styles.trendDown : ""}`}
-                            onClick={() => setPriceTrend("down")}
-                        >
-                            <TrendingDown size={16} /> Diminuir preço
-                        </button>
-                    </div>
-                </div>
-
-                <div className={styles.field}>
-                    <div className={styles.cardSubtitle}>
-                        <div className={styles.icon}><Mail size={16} /></div>
-                        <h2>Endereço eletrônico</h2>
-                    </div>
-                    <label className={styles.label}>Email</label>
-                    {user ? (
-                        <>
-                            <input
-                                type="email" value={email}
-                                placeholder="Insira seu email" className={styles.input} disabled
-                            />
-                        </>
-                    ) : (
-                        <input
-                            type="email"
-                            placeholder="Vinculado ao e-mail da sua conta"
-                            className={styles.input}
-                            disabled
-                        />
-                    )}
-                </div>
-
-                <Button
-                    textButton={loading ? "Processando..." : "Iniciar Monitoramento"}
-                    onClick={handleCreateMonitoring}
-                />
-            </div>
-            {statusMsg.text && (
-                <div className={styles.statusMsg}>
-                    <p className={statusMsg.type === 'success' ? styles.success : styles.error}>
-                        {statusMsg.text}
-                    </p>
-                </div>
-            )}
-        </>
-    );
-}
+import styles from "./Monitorar.module.scss";
 
 export default function MonitorarView() {
-    const supabase = createClient();
-    const [user, setUser] = useState<any>(null);
-    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-
-    useEffect(() => {
-        supabase.auth.getUser().then(({ data }) => setUser(data.user));
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-            setUser(session?.user ?? null);
-        });
-        return () => subscription.unsubscribe();
-    }, [supabase.auth]);
-
     return (
-        <>
-            <div className={styles.section}>
-                <div className={styles.container}>
-                    <div className={styles.card}>
-                        <div className={styles.cardContent}>
-                            <div className={styles.cardHeader}>
-                                <h1 className={styles.cardTitle}>Novo monitoramento</h1>
-                            </div>
+        <div className={styles.container}>
+            <section className={styles.section}>
 
-                            <MonitoringForm user={user} onRequireAuth={() => setIsAuthModalOpen(true)} />
+                <div className={styles.cards}>
+                    <article className={`${styles.card} ${styles.cardOne}`}>
+                        <div className={styles.cardOneContent}>
+                            <h2>
+                                Configure seu&nbsp;
+                                <br />
+                                monitoramento.
+                            </h2>
+                            <p>
+                                Selecione marca, modelo, ano e informe o
+                                preço que deseja acompanhar.
+                            </p>
+
+                            <span className={styles.detail}>
+                                <Button textButton="Novo monitoramento" icon={Plus} />
+                            </span>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            {isAuthModalOpen && <Modal onClose={() => setIsAuthModalOpen(false)} isOpen={isAuthModalOpen} />}
-        </>
+                        <div className={styles.cardOneImage}>
+                            <Image
+                                src={monitoringCreate}
+                                alt="Criação de um monitoramento"
+                                priority
+                                sizes="(max-width: 820px) 80vw, 52vw"
+                            />
+                        </div>
+                    </article>
+
+                    <article className={`${styles.card} ${styles.cardTwo}`}>
+                        <div className={styles.cardTwoContent}>
+                            <h2>
+                                Acompanhe o preço&nbsp;
+                                <br />
+                                sem precisar consultar todos os dias.
+                            </h2>
+                            <p>
+                                Veja o valor atual, sua meta e quanto falta para
+                                o veículo chegar ao preço desejado.
+                            </p>
+                        </div>
+
+                        <div className={styles.cardTwoImage}>
+                            <Image
+                                src={monitoringActive}
+                                alt="Acompanhamento do preço do veículo"
+                                sizes="(max-width: 600px) 86vw, 58vw"
+                            />
+                        </div>
+                    </article>
+
+                    <article className={`${styles.card} ${styles.cardThree}`}>
+                        <div className={styles.cardThreeContent}>
+                            <h2>
+                                Saiba quando&nbsp;
+                                <br />
+                                chegar a hora certa.
+                            </h2>
+                            <p>
+                                Quando o valor atingir sua meta, você
+                                recebe o aviso direto no seu e-mail.
+                            </p>
+                        </div>
+
+                        <div className={styles.cardThreeImage}>
+                            <Image
+                                src={monitoringAlert}
+                                alt="Alerta enviado ao atingir o preço desejado"
+                                sizes="(max-width: 820px) 84vw, 42vw"
+                            />
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
     );
 }
