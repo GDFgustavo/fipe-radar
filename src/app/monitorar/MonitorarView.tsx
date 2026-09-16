@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from "react";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 
@@ -6,9 +9,20 @@ import monitoringActive from "../../../public/monitoring-active.png";
 import monitoringAlert from "../../../public/monitoring-alert.png";
 
 import { Button } from "@/components/Button";
+import { Drawer } from '@/components/Drawer';
+import Modal from '@/components/Modal';
+import { MonitoringForm } from '@/components/MonitoringForm';
 import styles from "./Monitorar.module.scss";
 
-export default function MonitorarView() {
+interface Props {
+    user: any;
+}
+
+export default function MonitorarView({ user }: Props) {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const monitoringFormId = "monitoring-form";
+
     return (
         <div className={styles.container}>
             <section className={styles.section}>
@@ -27,7 +41,7 @@ export default function MonitorarView() {
                             </p>
 
                             <span className={styles.detail}>
-                                <Button textButton="Novo monitoramento" icon={Plus} />
+                                <Button onClick={() => setIsDrawerOpen(true)} textButton="Novo monitoramento" icon={Plus} />
                             </span>
                         </div>
 
@@ -86,6 +100,25 @@ export default function MonitorarView() {
                     </article>
                 </div>
             </section>
+
+            <Drawer
+                isOpen={isDrawerOpen}
+                onClose={() => setIsDrawerOpen(false)}
+                title="Criar Monitoramento"
+                subtitle='Configure seu alerta de preços em poucos passos'
+                footer={
+                    <Button
+                        textButton={"Iniciar Monitoramento"}
+                        form={monitoringFormId}
+                    />
+                }
+            >
+                <MonitoringForm formId={monitoringFormId} user={user} onRequireAuth={() => setIsAuthModalOpen(true)} />
+            </Drawer>
+
+            {isAuthModalOpen && (
+                <Modal onClose={() => setIsAuthModalOpen(false)} isOpen={isAuthModalOpen} />
+            )}
         </div>
     );
 }

@@ -1,0 +1,162 @@
+.cardSubtitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    h2 {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    span {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--muted-foreground);
+    }
+}
+
+.icon {
+    padding: 4px 4px 0;
+    border-radius: 8px;
+    background-color: var(--foreground);
+    color: var(--secondary);
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    background-color: var(--drawer-section-bg);
+    border: 1px solid var(--drawer-section-border);
+    border-radius: 10px;
+    padding: 8px;
+
+}
+
+.monitorGrid {
+    gap: 0.5rem;
+    grid-template-columns: repeat(1, 1fr);
+    align-items: end;
+}
+
+.inputWrapper {
+    position: relative;
+
+    .input {
+        padding-left: 38px;
+    }
+}
+
+.prefix {
+    position: absolute;
+    left: 0.75rem;
+    top: 47%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: var(--foreground);
+}
+
+.input {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background-color: var(--select);
+    color: var(--foreground);
+    padding: 0.665rem;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    box-shadow: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: var(--foreground);
+    }
+
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
+}
+
+.trendButtons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.trendButton {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 8px;
+    color: var(--foreground);
+    padding: 0.665rem;
+    border: 1px solid var(--border);
+    background: var(--select);
+    cursor: pointer;
+    font-size: 0.85rem;
+
+    &:hover {
+        border-color: var(--foreground);
+    }
+}
+
+.trendUp {
+    border-color: #16a34a;
+    color: #16a34a;
+
+    &:hover {
+        border-color: #16a34a;
+    }
+}
+
+.trendDown {
+    border-color: #dc2626;
+    color: #dc2626;
+
+    &:hover {
+        border-color: #dc2626;
+    }
+}
+
+.statusMsg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 1rem;
+    text-align: center;
+
+    .success,
+    .error {
+        padding: 0.875rem 1rem;
+        background: var(--hero-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        box-shadow:
+            0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .success {
+        color: #16a34a;
+    }
+
+    .error {
+        color: #dc2626;
+    }
+}

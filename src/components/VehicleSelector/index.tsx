@@ -61,6 +61,7 @@ export function VehicleSelector({ layout = 'horizontal',
                 <label className={styles.label}>Tipo de Veículo</label>
                 <div className={styles.typeGrid}>
                     <button
+                        type="button"
                         className={`${styles.typeButton} ${vehicleType === 'cars' ? styles.typeButtonActive : ''
                             }`}
                         onClick={() => onVehicleChange("cars")}
@@ -69,6 +70,7 @@ export function VehicleSelector({ layout = 'horizontal',
                         Carros
                     </button>
                     <button
+                        type="button"
                         className={`${styles.typeButton} ${vehicleType === 'motorcycles' ? styles.typeButtonActive : ''
                             }`}
                         onClick={() => onVehicleChange("motorcycles")}
@@ -77,6 +79,7 @@ export function VehicleSelector({ layout = 'horizontal',
                         Motos
                     </button>
                     <button
+                        type="button"
                         className={`${styles.typeButton} ${vehicleType === 'trucks' ? styles.typeButtonActive : ''
                             }`}
                         onClick={() => onVehicleChange("trucks")}

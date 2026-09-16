@@ -29,21 +29,21 @@
     gap: 0.5rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    border: 2px solid var(--border);
-    background: var(--card);
+    border: 1px solid var(--border);
+    background: var(--select);
     color: var(--muted-foreground);
     cursor: pointer;
     transition: all 0.2s ease;
 
     &:hover {
         border-color: var(--foreground);
-        background: var(--type-btn);
+        background: var(--select);
     }
 }
 
 .typeButtonActive {
     border-color: var(--foreground);
-    background: var(--type-btn);
+    background: var(--select);
     color: var(--foreground);
 }
 

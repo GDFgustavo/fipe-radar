@@ -1,8 +1,9 @@
+import { LogIn, Bell, CheckCircle2, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { LogIn, Bell, CheckCircle2, X } from "lucide-react";
 
 import { Button } from "@/components/Button";
+import { useLockScroll } from "@/hooks/useLockScroll";
 import styles from "./Modal.module.scss";
 
 interface ModalProps {
@@ -12,13 +13,12 @@ interface ModalProps {
 
 export default function Modal({ isOpen, onClose }: ModalProps) {
     const searchParams = useSearchParams();
-
     const currentParams = searchParams.toString();
-
     const returnPath = currentParams ? `/monitorar?${currentParams}` : "/monitorar";
 
     const loginUrl = `/login?redirect=${encodeURIComponent(returnPath)}`;
     const cadastroUrl = `/cadastro?redirect=${encodeURIComponent(returnPath)}`;
+    useLockScroll(isOpen)
 
     if (!isOpen) return null;
 

@@ -76,6 +76,8 @@ export function useMonitoringForm(user: any, onRequireAuth: () => void) {
         try {
             const fipeDetails = await fipe.onSubmit();
             const numericCurrentPrice = parseCurrencyToNumber(fipeDetails?.price);
+            const codeFipe = fipeDetails?.codeFipe;
+            const fuel = fipeDetails?.fuel;
 
             if (numericCurrentPrice === 0) throw new Error("Não foi possível obter o preço atual.");
 
@@ -89,6 +91,8 @@ export function useMonitoringForm(user: any, onRequireAuth: () => void) {
                 year_name: yearName,
                 target_price: targetPrice,
                 current_price: numericCurrentPrice,
+                code_fipe: codeFipe,
+                fuel: fuel,
                 price_trend: priceTrend,
                 email: user.email.toLowerCase().trim(),
                 email_sent: false,

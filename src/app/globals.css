@@ -5,6 +5,7 @@
   --header-bg: #ffffff;
   --card: #ffffff;
   --monitoring-card-3: #9c9b9b;
+  --select: #fff;
   --secondary: #eaeaea;
   --muted-foreground: #666666;
   --border: #dedede;
@@ -23,6 +24,9 @@
   --status: #66666656;
   --section: #f2f2f2;
   --skeleton: linear-gradient(90deg, #dededee0 25%, #d4d4d4 50%, #dededee0 75%);
+  --drawer-bg: #ffffff;
+  --drawer-section-bg: #f7f7f8;
+  --drawer-section-border: #e8e8ea;
 }
 
 [data-theme='dark'] {
@@ -32,6 +36,7 @@
   --header-bg: rgb(0, 0, 0);
   --card: hsla(0, 0%, 4%, 1);
   --monitoring-card-3: #393939;
+  --select: rgb(24, 24, 24);
   --secondary: #1f1f1f;
   --muted-foreground: #8e8e8e;
   --border: #2f2f2f;
@@ -50,6 +55,9 @@
   --status: #8e8e8e39;
   --section: #0c0c0c;
   --skeleton: linear-gradient(90deg, #3e3e3eb3 25%, #74727272 50%, #3e3e3eb3 75%);
+  --drawer-bg: #141414;
+  --drawer-section-bg: #1a1a1a;
+  --drawer-section-border: #292929;
 }
 
 body {
@@ -82,4 +90,19 @@ button {
 .main-content {
   padding-top: 64px;
   flex: 1;
+}
+
+body.scroll-locked {
+  overflow: hidden !important;
+  padding-right: var(--scrollbar-width) !important;
+}
+
+header {
+  padding-right: var(--scrollbar-width);
+}
+
+:root {
+  --z-header: 50;
+  --z-drawer: 100;
+  --z-modal: 200;
 }

@@ -34,7 +34,7 @@ function SelectCustom<Option extends BaseOption>({
         control: (provided) => ({
             ...provided,
             width: "100%",
-            backgroundColor: "var(--card)",
+            backgroundColor: "var(--select)",
             border: "1px solid var(--border)",
             borderRadius: "8px",
             padding: "4px 4px",

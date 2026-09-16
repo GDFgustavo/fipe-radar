@@ -1,6 +1,8 @@
 import { Metadata } from "next";
-import MonitorarView from "./MonitorarView";
 import { Suspense } from "react";
+import { createClient } from "@/utils/supabase/server";
+
+import MonitorarView from "./MonitorarView";
 
 export const metadata: Metadata = {
     title: 'Monitoramento de Preços e Alertas de Variação',
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
     },
 }
 
-export default function Page() {
+export default async function Page() {
     const breadcrumbJsonLd = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -45,6 +47,12 @@ export default function Page() {
         ]
     };
 
+    const supabase = await createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     return (
         <>
             <script
@@ -52,7 +60,7 @@ export default function Page() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
             <Suspense fallback={null}>
-                <MonitorarView />
+                <MonitorarView user={user} />
             </Suspense>
         </>
     );
