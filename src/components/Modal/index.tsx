@@ -1,8 +1,7 @@
-import { LogIn, Bell, CheckCircle2, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-import { Button } from "@/components/Button";
 import { useLockScroll } from "@/hooks/useLockScroll";
 import styles from "./Modal.module.scss";
 
@@ -30,42 +29,38 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
                 </button>
 
                 <header className={styles.header}>
-                    <div className={styles.iconWrapper}>
-                        <Bell size={32} />
+                    <div>
+                        <h2>Entre para criar monitoramentos</h2>
+
+                        <p>
+                            Crie uma conta ou entre para salvar seus alertas
+                            e acompanhar as variações de preço.
+                        </p>
                     </div>
-                    <h2>Crie sua conta gratuita</h2>
-                    <p>
-                        Para monitorar preços e receber alertas, você precisa de uma conta.
-                    </p>
                 </header>
-
-                <div className={styles.actions}>
-                    <Link href={loginUrl} className={styles.linkBlock}>
-                        <Button icon={LogIn} textButton="Fazer Login" />
-                    </Link>
-
-                    <Link href={cadastroUrl} className={styles.linkBlock}>
-                        <button className={styles.btnOutline}>
-                            Criar Conta Grátis
-                        </button>
-                    </Link>
-                </div>
 
                 <div className={styles.featuresBox}>
                     <ul>
-                        <li>
-                            <CheckCircle2 size={18} />
-                            <span>Alertas Direto no E-Mail</span>
-                        </li>
-                        <li>
-                            <CheckCircle2 size={18} />
-                            <span>Preço Alvo Inteligente</span>
-                        </li>
-                        <li>
-                            <CheckCircle2 size={18} />
-                            <span>Monitore em Segundos</span>
-                        </li>
+                        <li>Receba alertas direto no seu e-mail</li>
+                        <li>Acompanhe seus monitoramentos em um só lugar</li>
+                        <li>Cadastro gratuito</li>
                     </ul>
+                </div>
+
+                <div className={styles.actions}>
+                    <Link
+                        href={cadastroUrl}
+                        className={styles.btnPrimary}
+                    >
+                        Criar conta
+                    </Link>
+
+                    <p className={styles.loginText}>
+                        Já tem uma conta?&nbsp;
+                        <Link href={loginUrl}>
+                            Entrar
+                        </Link>
+                    </p>
                 </div>
             </div>
         </div>

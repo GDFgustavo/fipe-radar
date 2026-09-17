@@ -1,16 +1,8 @@
-// Variáveis inspiradas no seu tema
-$primary: #0f172a;
-$primary-light: rgba(15, 23, 42, 0.1); // primary/10
-$secondary-bg: rgba(241, 245, 249, 0.8); // secondary/50
-$accent: #10b981; // Cor para os ícones de check
-$text-muted: #64748b;
-$border-color: #e2e8f0;
-
 .overlay {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(2px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,10 +13,10 @@ $border-color: #e2e8f0;
 .modal {
     background: var(--card);
     width: 100%;
-    max-width: 448px; // sm:max-w-md
+    max-width: 448px;
     border-radius: 0.75rem;
     border: 1px solid var(--border);
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     animation: modalIn 0.2s ease-out;
@@ -32,8 +24,8 @@ $border-color: #e2e8f0;
 
 .closeButton {
     position: absolute;
-    right: 1rem;
-    top: 1rem;
+    right: 0.5rem;
+    top: 0.5rem;
     background: transparent;
     border: none;
     color: var(--foreground);
@@ -49,20 +41,7 @@ $border-color: #e2e8f0;
 }
 
 .header {
-    text-align: center;
     margin-bottom: 1.5rem;
-
-    .iconWrapper {
-        width: 4rem;
-        height: 4rem;
-        background-color: var(--secondary);
-        color: var(--foreground);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1rem;
-    }
 
     h2 {
         font-size: 1.25rem;
@@ -72,73 +51,22 @@ $border-color: #e2e8f0;
     }
 
     p {
-        font-size: 1rem;
+        font-size: 0.925rem;
         color: var(--muted-foreground);
         line-height: 1.5;
     }
 }
 
-.actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem; // space-y-3
-    margin-bottom: 1.5rem;
-}
-
-.linkBlock {
-    text-decoration: none;
-    display: block;
-}
-
-// Estilo Base dos Botões
-.btnPrimary,
-.btnOutline {
-    width: 100%;
-    height: 3rem; // size="lg"
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-family: inherit; // Aplica sua fonte do Next.js
-    transition: all 0.2s;
-}
-
-.btnPrimary {
-    background-color: var(--foreground);
-    color: var(--secondary);
-    border: none;
-
-    &:hover {
-        opacity: 0.9;
-    }
-}
-
-.btnOutline {
-    background-color: transparent;
-    border: 1px solid var(--border);
-    color: var(--foreground);
-    width: 100%;
-    height: 39px;
-
-    &:hover {
-        background-color: var(--foreground);
-        color: var(--secondary);
-    }
-}
-
 .featuresBox {
-    background-color: var(--secondary);
+    background-color: var(--drawer-section-bg);
     padding: 1rem;
     border-radius: 0.5rem;
+    margin-bottom: 1rem;
 
     ul {
-        list-style: none;
         padding: 0;
         margin: 0;
+        list-style: none;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
@@ -151,8 +79,55 @@ $border-color: #e2e8f0;
         font-size: 0.875rem;
         color: var(--muted-foreground);
 
-        svg {
-            color: $accent; // Cor do CheckCircle
+        &::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--foreground);
+            flex-shrink: 0;
+        }
+    }
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.btnPrimary {
+    width: 100%;
+    height: 39px;
+    padding: 0.5rem;
+    background-color: var(--foreground);
+    color: var(--background);
+    border-radius: 0.5rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.loginText {
+    margin: 0;
+    text-align: center;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+
+    a {
+        color: var(--foreground);
+        font-weight: 600;
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
