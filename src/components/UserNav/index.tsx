@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LogOut, LogIn } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -44,6 +44,7 @@ export function UserNav({ isMobile = false, isNavbarVisible = true }: UserNavPro
     const supabase = createClient()
     const pathname = usePathname()
     const searchParams = useSearchParams()
+    const router = useRouter()
 
     const [user, setUser] = useState<any>(null)
     const [isOpen, setIsOpen] = useState(false);
@@ -57,6 +58,11 @@ export function UserNav({ isMobile = false, isNavbarVisible = true }: UserNavPro
     const currentParams = searchParams.toString();
     const returnPath = currentParams ? `${pathname}?${currentParams}` : pathname;
     const loginUrl = `/login?redirect=${encodeURIComponent(returnPath)}`;
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.refresh();
+    };
 
     useEffect(() => {
         async function inicializarAutenticacao() {
@@ -99,7 +105,7 @@ export function UserNav({ isMobile = false, isNavbarVisible = true }: UserNavPro
                                 <p className={styles.infoEmail}>{user.email}</p>
                             </div>
                         </div>
-                        <button className={`${styles.menuItem} ${styles.destructive}`} onClick={() => supabase.auth.signOut()}>
+                        <button className={`${styles.menuItem} ${styles.destructive}`} onClick={handleLogout}>
                             <LogOut size={16} />
                             <span>Sair</span>
                         </button>
@@ -127,15 +133,14 @@ export function UserNav({ isMobile = false, isNavbarVisible = true }: UserNavPro
                     {isOpen && (
                         <div className={`${styles.menuContent} ${styles.isOpen}`}>
                             <div className={styles.userInfo}>
+                                <span className={styles.userLabel}>Conta</span>
                                 <p className={styles.infoEmail}>{user.email}</p>
                             </div>
                             <div className={styles.separator} />
-                            <Link href="/meus-monitoramentos">
-                                <button className={styles.menuItem}>
-                                    <span>Meus monitoramentos</span>
-                                </button>
+                            <Link href="/meus-monitoramentos" className={styles.menuItem}>
+                                <span>Meus monitoramentos</span>
                             </Link>
-                            <button className={styles.menuItem} onClick={() => supabase.auth.signOut()}>
+                            <button className={styles.menuItem} onClick={handleLogout}>
                                 <LogOut size={16} />
                                 <span>Sair</span>
                             </button>

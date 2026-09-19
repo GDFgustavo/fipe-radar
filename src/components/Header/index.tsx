@@ -91,7 +91,7 @@ export function Header() {
                 </div>
 
                 <button className={styles.mobileButton} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                    {mobileMenuOpen ? <X className={styles.iconLarge} /> : <Menu className={styles.iconLarge} />}
+                    {mobileMenuOpen ? <X className={styles.iconMenu} /> : <Menu className={styles.iconMenu} />}
                 </button>
             </div>
 
