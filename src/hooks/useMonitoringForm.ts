@@ -89,6 +89,7 @@ export function useMonitoringForm(user: any, onRequireAuth: () => void) {
                 model_name: modelName,
                 year: fipe.year,
                 year_name: yearName,
+                initial_price: numericCurrentPrice,
                 target_price: targetPrice,
                 current_price: numericCurrentPrice,
                 code_fipe: codeFipe,
@@ -105,6 +106,7 @@ export function useMonitoringForm(user: any, onRequireAuth: () => void) {
             setStatusMsg({ type: 'success', text: 'Monitoramento criado com sucesso!' });
             fipe.resetForm();
             setTargetPrice(MIN_VALUE);
+            document.querySelector<HTMLButtonElement>('#bnt-close-drawer')?.click();
             router.push(nextRoute);
             router.refresh();
         } catch (err: any) {

@@ -177,6 +177,7 @@ const hitTarget = (alert.price_trend === 'down' && fipePrice <= alert.target_pri
     })
 
     updateData.email_sent = true
+    updateData.status = 'reached'
     console.log(`📩 Email enviado para ${alert.email}`)
     }
 
