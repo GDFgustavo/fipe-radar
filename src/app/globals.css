@@ -19,7 +19,7 @@
   --hero-bg: #ffffff;
   --type-btn: rgba(0, 0, 0, 0.03);
   --footer: rgba(0, 0, 0, 0.03);
-  --overlay: #ebebeb;
+  --overlay: rgba(225, 224, 224, 0.5);
   --theme-icon: #000;
   --status: #66666656;
   --section: #f2f2f2;
@@ -50,7 +50,7 @@
   --hero-bg: rgb(24, 24, 24);
   --type-btn: rgba(0, 0, 0, 0.03);
   --footer: rgba(20, 20, 20, 0.762);
-  --overlay: #090909f3;
+  --overlay: rgba(0, 0, 0, 0.5);
   --theme-icon: #fff;
   --status: #8e8e8e39;
   --section: #0c0c0c;

@@ -27,7 +27,7 @@ export function Drawer({ isOpen, onClose, children, title, subtitle, footer }: D
                         {title && <h2 className={styles.title}>{title}</h2>}
                         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
                     </div>
-                    <button className={styles.closeButton} onClick={onClose} aria-label="Fechar">
+                    <button className={styles.closeButton} onClick={onClose} id='bnt-close-drawer' aria-label="Fechar">
                         <X size={20} />
                     </button>
                 </div>

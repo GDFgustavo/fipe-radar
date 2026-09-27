@@ -1,6 +1,10 @@
-"use client"
+"use client";
 
-import Select, { components, StylesConfig } from "react-select";
+import Select, {
+    components,
+    mergeStyles,
+    StylesConfig,
+} from "react-select";
 
 type BaseOption = {
     label: string;
@@ -14,7 +18,8 @@ type SelectCustomProps<Option> = {
     options: Option[];
     placeholder?: string;
     isSearchable?: boolean;
-    isDisabled?: boolean
+    isDisabled?: boolean;
+    styles?: StylesConfig<Option, false>;
 };
 
 const Input = (props: any) => (
@@ -28,7 +33,8 @@ function SelectCustom<Option extends BaseOption>({
     options,
     placeholder,
     isSearchable = true,
-    isDisabled
+    isDisabled,
+    styles,
 }: SelectCustomProps<Option>) {
     const customStyles: StylesConfig<Option, false> = {
         control: (provided) => ({
@@ -40,12 +46,15 @@ function SelectCustom<Option extends BaseOption>({
             padding: "4px 4px",
             cursor: "pointer",
             fontSize: "14px",
+
             "@media (max-width: 768px)": {
                 fontSize: "16px",
             },
+
             fontWeight: 500,
             boxShadow: "none",
             transition: "all .2s ease",
+
             "&:hover": {
                 boxShadow: "none",
                 borderColor: "var(--foreground)",
@@ -56,6 +65,7 @@ function SelectCustom<Option extends BaseOption>({
             ...provided,
             color: "var(--foreground)",
             fontSize: "14px",
+
             "@media (max-width: 768px)": {
                 fontSize: "16px",
             },
@@ -65,6 +75,7 @@ function SelectCustom<Option extends BaseOption>({
             ...provided,
             color: "var(--foreground)",
             fontSize: "14px",
+
             "@media (max-width: 768px)": {
                 fontSize: "16px",
             },
@@ -85,9 +96,11 @@ function SelectCustom<Option extends BaseOption>({
             ...provided,
             padding: "12px 16px",
             fontSize: "14px",
+
             "@media (max-width: 768px)": {
                 fontSize: "16px",
             },
+
             cursor: "pointer",
             backgroundColor: state.isSelected
                 ? "var(--secondary)"
@@ -95,9 +108,10 @@ function SelectCustom<Option extends BaseOption>({
                     ? "var(--secondary)"
                     : "transparent",
             color: "var(--foreground)",
-            transition: 'all 0.2s ease',
-            ':active': {
-                backgroundColor: 'var(--secondary)'
+            transition: "all 0.2s ease",
+
+            ":active": {
+                backgroundColor: "var(--secondary)",
             },
         }),
 
@@ -117,11 +131,14 @@ function SelectCustom<Option extends BaseOption>({
             ...provided,
             color: "var(--muted-foreground)",
             padding: "4px",
-            transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : "rotate(0)",
+            transform: state.selectProps.menuIsOpen
+                ? "rotate(180deg)"
+                : "rotate(0)",
             transition: "transform .2s ease",
+
             "&:hover": {
-                color: "var(--muted-foreground)"
-            }
+                color: "var(--muted-foreground)",
+            },
         }),
 
         clearIndicator: (provided) => ({
@@ -143,12 +160,15 @@ function SelectCustom<Option extends BaseOption>({
         multiValueRemove: (provided) => ({
             ...provided,
             color: "#6b7280",
+
             ":hover": {
                 backgroundColor: "#e5e7eb",
                 color: "#111827",
             },
         }),
     };
+
+    const mergedStyles = mergeStyles(customStyles, styles);
 
     return (
         <Select<Option, false>
@@ -161,9 +181,9 @@ function SelectCustom<Option extends BaseOption>({
             isSearchable={isSearchable}
             noOptionsMessage={() => "Nenhuma opção encontrada"}
             isDisabled={isDisabled}
-            styles={customStyles}
+            styles={mergedStyles}
         />
-    )
+    );
 }
 
-export default SelectCustom
+export default SelectCustom;

@@ -1,125 +1,96 @@
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { Bell, CheckCircle2, Clock, Plus } from 'lucide-react';
+"use client"
 
-import { MyMonitoringCard } from './MyMonitoringCard';
-import { Filter } from './Filter';
+import { useState } from 'react';
+import { Plus } from 'lucide-react';
+
+import { MonitoringCard } from './_components/MonitoringCard';
+import { Filter } from './_components/Filter';
 import { Button } from '@/components/Button';
-import { MonitoringLimit } from './MonitoringLimit';
+import { EmptyState } from './_components/EmptyState';
+import { Drawer } from '@/components/Drawer';
+import { MonitoringForm } from '@/components/MonitoringForm';
 
-import { createClient } from '@/utils/supabase/server';
-import styles from './MyMonitorings.module.scss';
+import styles from './MyMonitoring.module.scss';
 
 export interface MyMonitoringViewProps {
-    searchParams: Promise<{ ordem?: string }>
+    user: any;
+    monitoramentos: any[];
+    totais: { atingidas: number; emAndamento: number };
 }
 
-export default async function MyMonitoringView({ searchParams }: MyMonitoringViewProps) {
-    const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const urlParams = await searchParams
-    const ordenacao = urlParams?.ordem === 'asc' ? true : false
-
-    if (!user) {
-        redirect('/login')
-    }
-
-    const { data: monitoramentos, error } = await supabase
-        .from('price_alerts')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: ordenacao })
-
-    if (error) {
-        console.error('Erro ao buscar monitoramentos:', error.message)
-    }
-
-    const totais = monitoramentos?.reduce(
-        (acc, item) => {
-            if (item.email_sent) {
-                acc.atingidas += 1
-            } else {
-                acc.emAndamento += 1
-            }
-            return acc
-        },
-        { atingidas: 0, emAndamento: 0 }
-    ) || { atingidas: 0, emAndamento: 0 }
+export default function MyMonitoringView({ user, monitoramentos, totais }: MyMonitoringViewProps) {
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const monitoringFormId = "monitoring-form";
 
     return (
         <div className={styles.container}>
-            <header className={styles.pageHeader}>
+            <div className={styles.pageHeader}>
                 <div>
                     <h1>Meus Monitoramentos</h1>
                     <p>Acompanhe a variação de preço da tabela FIPE</p>
                 </div>
                 <div className={styles.btn}>
                     {!monitoramentos || monitoramentos.length === 0 ? '' : (
-                        <Link href='/monitorar'>
-                            <Button icon={Plus} textButton="Novo Monitoramento" />
-                        </Link>
+                        <Button icon={Plus} textButton="Novo Monitoramento" onClick={() => setIsDrawerOpen(true)} />
                     )}
                 </div>
-            </header>
+            </div>
 
-            <section className={styles.statsGrid}>
-                <div className={styles.statCard}>
-                    <div className={styles.iconCircle}>
-                        <Bell size={24} />
-                    </div>
-                    <div className={styles.statText}>
-                        <span>Total</span>
-                        <strong>{monitoramentos?.length}</strong>
-                    </div>
-                </div>
-
-                <div className={styles.statCard}>
-                    <div className={`${styles.iconCircle} ${styles.green}`}>
-                        <CheckCircle2 size={24} />
-                    </div>
-                    <div className={styles.statText}>
-                        <span>Metas Atingidas</span>
-                        <strong>{totais.atingidas}</strong>
-                    </div>
-                </div>
-
-                <div className={styles.statCard}>
-                    <div className={styles.iconCircle}>
-                        <Clock size={24} />
-                    </div>
-                    <div className={styles.statText}>
-                        <span>Em Monitoramento</span>
+            <section className={styles.compactStatsBar}>
+                <div className={styles.statGroup}>
+                    <div className={styles.statItem}>
                         <strong>{totais.emAndamento}</strong>
+                        <span>{totais.emAndamento === 1 ? 'ativo' : 'ativos'}</span>
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    <div className={styles.statItem}>
+                        <strong>{totais.atingidas}</strong>
+                        <span>{totais.atingidas === 1 ? 'atingido' : 'atingidos'}</span>
                     </div>
                 </div>
 
-                <div className={styles.statCard}>
-                    <MonitoringLimit currentCount={monitoramentos?.length} />
+                <div className={styles.statItem}>
+                    <strong>{monitoramentos?.length || 0} de 3</strong>
+                    <span>usados</span>
                 </div>
             </section>
 
             <section>
                 <div className={styles.filterContainer}>
-                    <Filter />
+                    {!monitoramentos || monitoramentos.length === 0 ? '' : <Filter />}
                 </div>
             </section>
 
             {!monitoramentos || monitoramentos.length === 0 ? (
-                <div className={styles.emptyState}>
-                    <p>Você ainda não está monitorando nenhum veículo.</p>
-                    <div>
-                        <Link href='/monitorar'>
-                            <Button icon={Plus} textButton="Novo Monitoramento" />
-                        </Link>
-                    </div>
-                </div>
+                <EmptyState onClick={() => setIsDrawerOpen(true)} />
+
             ) : (
                 <section className={styles.listSection}>
                     {monitoramentos.map((item) => (
-                        <MyMonitoringCard key={item.id} item={item} />
+                        <MonitoringCard key={item.id} item={item} />
                     ))}
                 </section>
             )}
+
+            <div className={styles.section}>
+                <Drawer
+                    isOpen={isDrawerOpen}
+                    onClose={() => setIsDrawerOpen(false)}
+                    title="Criar Monitoramento"
+                    subtitle='Configure seu alerta de preços em poucos passos'
+                    footer={
+                        <Button
+                            textButton={"Iniciar Monitoramento"}
+                            form={monitoringFormId}
+                        />
+                    }
+                >
+                    <MonitoringForm formId={monitoringFormId} user={user} onRequireAuth={() => undefined} />
+                </Drawer>
+            </div>
+
         </div>
     );
 }

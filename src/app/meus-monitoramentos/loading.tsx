@@ -1,8 +1,6 @@
-import styles from './MyMonitorings.module.scss';
+import styles from './MyMonitoring.module.scss'
 
-export default function MyMonitoringsLoading() {
-    const lodingItems = Array.from({ length: 3 });
-
+export default function loading() {
     return (
         <div className={styles.container}>
             <header className={styles.pageHeader}>
@@ -12,21 +10,15 @@ export default function MyMonitoringsLoading() {
                 </div>
             </header>
 
-            <section className={styles.statsGrid}>
-                {[1, 2, 3].map((i) => (
-                    <div key={i} className={` ${styles.skeletonCard}`}>
-                        <div className={styles.skeletonPulse}></div>
-                    </div>
-                ))}
-            </section>
-
             <section className={styles.listSection}>
-                {lodingItems.map((_, index) => (
-                    <div key={index} className={`${styles.vehicleCardSkeleton}`}>
-                        <div className={styles.skeletonPulse}></div>
+                {[1, 2, 3].map((item) => (
+                    <div key={item} className={styles.vehicleCardSkeleton}>
+                        <div className={styles.skeletonTitle} />
+                        <div className={styles.skeletonText} />
+                        <div className={styles.skeletonPrice} />
                     </div>
                 ))}
             </section>
         </div>
-    );
+    )
 }

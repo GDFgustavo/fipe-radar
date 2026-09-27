@@ -2,8 +2,8 @@
 
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import Select from '@/components/ui/select'
+import styles from '../MyMonitoring.module.scss'
 
-import styles from './MyMonitorings.module.scss'
 const options = [
     { value: 'desc', label: 'Mais recentes' },
     { value: 'asc', label: 'Mais antigos' }
@@ -29,7 +29,9 @@ export function Filter() {
     }
 
     return (
-        <div className={styles.selectWrapper}>
+        <div className={styles.filterWrapper}>
+            Ordenar por:
+
             <Select
                 instanceId="order-select-fipe"
                 options={options}
@@ -37,6 +39,25 @@ export function Filter() {
                 onChange={handleChange}
                 placeholder="Ordenar por..."
                 isSearchable={false}
+                styles={{
+                    control: (provided) => ({
+                        ...provided,
+                        backgroundColor: "transparent",
+                        padding: "0",
+                        border: 'none',
+                        "&:hover": {
+                            backgroundColor: "var(--secondary)",
+                        },
+                    }),
+                    singleValue: (provided) => ({
+                        ...provided,
+                        fontSize: "16px",
+                    }),
+                    dropdownIndicator: (provided) => ({
+                        ...provided,
+                        color: "var(--foregorund)",
+                    }),
+                }}
             />
         </div>
     )
