@@ -6,6 +6,7 @@ import { VehicleSelector } from "@/components/VehicleSelector";
 import { useMonitoringForm } from "@/hooks/useMonitoringForm";
 
 import styles from "./MonitoringForm.module.scss";
+import { Spinner } from "../ui/Spinner";
 
 interface MonitoringFormProps {
     user: any;
@@ -20,6 +21,7 @@ export function MonitoringForm({
 }: MonitoringFormProps) {
     const {
         fipe,
+        currentFipePrice,
         email,
         priceTrend,
         setPriceTrend,
@@ -29,7 +31,6 @@ export function MonitoringForm({
         handleCreateMonitoring,
         MIN_VALUE,
     } = useMonitoringForm(user, onRequireAuth);
-
     const handleSubmit = async (
         event: React.SubmitEvent<HTMLFormElement>
     ) => {
@@ -60,15 +61,22 @@ export function MonitoringForm({
                     </div>
                     <VehicleSelector {...fipe} />
                 </div>
-
                 <div className={styles.field}>
                     <div className={styles.cardSubtitle}>
-                        <h2>Preço alvo&nbsp;
-                            <span>
-                                (Mínimo: R$ 1.000)
-                            </span>
-                        </h2>
+                        <h2>
+                            Preço alvo</h2>
                     </div>
+
+                    {fipe.isDetailsLoading ? (
+                        <label className={styles.label}>
+                            Consultando preço atual da FIPE <Spinner />
+                        </label>
+                    ) : currentFipePrice > 0 ? (
+                        <label className={styles.label}>
+                            Preço atual da FIPE:{" "}
+                            R$ {currentFipePrice.toLocaleString("pt-BR")}
+                        </label>
+                    ) : null}
 
                     <div className={styles.inputWrapper}>
                         <span className={styles.prefix}>R$</span>
@@ -87,6 +95,7 @@ export function MonitoringForm({
                             decimalScale={0}
                             allowNegative={false}
                             className={styles.input}
+                            disabled={fipe.isDetailsLoading === true}
                         />
                     </div>
                 </div>
@@ -98,8 +107,8 @@ export function MonitoringForm({
 
                     <label className={styles.label}>
                         {priceTrend === "up"
-                            ? 'Você será notificado quando o preço atingir ou ultrapassar o valor alvo.'
-                            : 'Você será notificado quando o preço atingir ou ficar abaixo do valor alvo.'}
+                            ? 'Você será notificado quando o preço atingir ou ultrapassar o preço alvo.'
+                            : 'Você será notificado quando o preço atingir ou ficar abaixo do preço alvo.'}
                     </label>
 
                     <div className={styles.trendButtons}>

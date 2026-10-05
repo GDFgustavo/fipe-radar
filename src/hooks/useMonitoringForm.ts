@@ -6,24 +6,53 @@ import { createClient } from "@/utils/supabase/client";
 const MIN_VALUE = 1000;
 
 export function useMonitoringForm(user: any, onRequireAuth: () => void) {
-    const fipe = useFipeForm();
+    const fipe = useFipeForm({
+        fetchDetailsOnYear: true
+    });
+
     const router = useRouter();
     const searchParams = useSearchParams();
     const supabase = createClient();
-    const nextRoute = useMemo(() => searchParams.get('redirect') || '/meus-monitoramentos', [searchParams]);
 
-    const [priceTrend, setPriceTrend] = useState<"up" | "down">('up');
+    const nextRoute = useMemo(
+        () => searchParams.get("redirect") || "/meus-monitoramentos",
+        [searchParams]
+    );
+
+    const [priceTrend, setPriceTrend] = useState<"up" | "down">("up");
     const [targetPrice, setTargetPrice] = useState<number>(MIN_VALUE);
     const [loading, setLoading] = useState(false);
-    const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error' | null, text: string }>({ type: null, text: '' });
 
-    const brandName = fipe.brands?.find(b => b.code === fipe.brand)?.name;
-    const modelName = fipe.models?.find(m => m.code === fipe.model)?.name;
-    const yearName = fipe.years?.find(y => y.code === fipe.year)?.name;
+    const [statusMsg, setStatusMsg] = useState<{
+        type: "success" | "error" | null;
+        text: string;
+    }>({
+        type: null,
+        text: ""
+    });
+
+    const brandName = fipe.brands?.find(
+        (b) => b.code === fipe.brand
+    )?.name;
+
+    const modelName = fipe.models?.find(
+        (m) => m.code === fipe.model
+    )?.name;
+
+    const yearName = fipe.years?.find(
+        (y) => y.code === fipe.year
+    )?.name;
 
     useEffect(() => {
         if (!statusMsg.text) return;
-        const timer = setTimeout(() => setStatusMsg({ type: null, text: '' }), 7000);
+
+        const timer = setTimeout(() => {
+            setStatusMsg({
+                type: null,
+                text: ""
+            });
+        }, 7000);
+
         return () => clearTimeout(timer);
     }, [statusMsg.text]);
 
@@ -44,76 +73,153 @@ export function useMonitoringForm(user: any, onRequireAuth: () => void) {
         if (params.price) setTargetPrice(Number(params.price));
         if (params.trend) setPriceTrend(params.trend);
 
-        if (params.vehicleType && params.brand && params.model && params.year && user) {
+        if (
+            params.vehicleType &&
+            params.brand &&
+            params.model &&
+            params.year &&
+            user
+        ) {
             router.replace("/monitorar");
         }
     }, [searchParams, user]);
 
     const parseCurrencyToNumber = (rawPrice?: string): number => {
         if (!rawPrice) return 0;
-        return parseFloat(rawPrice.replace("R$ ", "").replace(/\./g, "").replace(",", "."));
+
+        return parseFloat(
+            rawPrice
+                .replace("R$ ", "")
+                .replace(/\./g, "")
+                .replace(",", ".")
+        );
     };
 
+    const currentFipePrice = parseCurrencyToNumber(
+        fipe.details?.price
+    );
+
+    const targetIsValid =
+        currentFipePrice > 0 &&
+        (
+            priceTrend === "down"
+                ? targetPrice < currentFipePrice
+                : targetPrice > currentFipePrice
+        );
+
     const handleCreateMonitoring = async () => {
-    if (!user) {
-        const url = fipe.brand
-            ? `/monitorar?vehicleType=${fipe.vehicleType || ''}&brand=${fipe.brand || ''}&model=${fipe.model || ''}&year=${fipe.year || ''}&targetPrice=${targetPrice}&priceTrend=${priceTrend}`
-            : '/monitorar';
+        if (!user) {
+            const url = fipe.brand
+                ? `/monitorar?vehicleType=${fipe.vehicleType || ""}&brand=${fipe.brand || ""}&model=${fipe.model || ""}&year=${fipe.year || ""}&targetPrice=${targetPrice}&priceTrend=${priceTrend}`
+                : "/monitorar";
 
-        router.replace(url);
-        onRequireAuth();
-        return;
-    }
-
-        if (!fipe.brand || !fipe.model || !fipe.year || !targetPrice) {
-            setStatusMsg({ type: 'error', text: 'Preencha todos os campos corretamente.' });
+            router.replace(url);
+            onRequireAuth();
             return;
         }
 
+        if (!fipe.brand || !fipe.model || !fipe.year || !targetPrice) {
+            setStatusMsg({
+                type: "error",
+                text: "Preencha todos os campos corretamente."
+            });
+
+            return;
+        }
+
+        if (fipe.isDetailsLoading) {
+            setStatusMsg({
+                type: "error",
+                text: "Aguarde a consulta do preço da FIPE terminar."
+            });
+
+            return;
+        }
+
+        if (!fipe.details || currentFipePrice <= 0) {
+            setStatusMsg({
+                type: "error",
+                text: "Não foi possível obter o preço atual da FIPE."
+            });
+
+            return;
+        }
+        if(!targetIsValid) {
+            setStatusMsg ({
+                type: "error",
+                text:
+                priceTrend === "down"
+                ? `O preço alvo deve ser menor que R$ ${currentFipePrice.toLocaleString("pt-BR")}`
+                : `O preço alvo deve ser maior que R$ ${currentFipePrice.toLocaleString("pt-BR")}`
+            });
+
+            return
+        }
+
         setLoading(true);
-        setStatusMsg({ type: null, text: '' });
+        setStatusMsg({
+            type: null,
+            text: ""
+        });
 
         try {
-            const fipeDetails = await fipe.onSubmit();
-            const numericCurrentPrice = parseCurrencyToNumber(fipeDetails?.price);
-            const codeFipe = fipeDetails?.codeFipe;
-            const fuel = fipeDetails?.fuel;
+            const numericCurrentPrice = currentFipePrice;
+            const codeFipe = fipe.details.codeFipe;
+            const fuel = fipe.details.fuel;
 
-            if (numericCurrentPrice === 0) throw new Error("Não foi possível obter o preço atual.");
+            const { error: dbError } = await supabase
+                .from("price_alerts")
+                .insert([
+                    {
+                        vehicle_type: fipe.vehicleType,
+                        brand: fipe.brand,
+                        brand_name: brandName,
+                        model: fipe.model,
+                        model_name: modelName,
+                        year: fipe.year,
+                        year_name: yearName,
+                        initial_price: numericCurrentPrice,
+                        current_price: numericCurrentPrice,
+                        target_price: targetPrice,
+                        code_fipe: codeFipe,
+                        fuel: fuel,
+                        price_trend: priceTrend,
+                        email: user.email.toLowerCase().trim(),
+                        email_sent: false,
+                        is_confirmed: true,
+                        user_id: user.id
+                    }
+                ]);
 
-            const { error: dbError } = await supabase.from('price_alerts').insert([{
-                vehicle_type: fipe.vehicleType,
-                brand: fipe.brand,
-                brand_name: brandName,
-                model: fipe.model,
-                model_name: modelName,
-                year: fipe.year,
-                year_name: yearName,
-                initial_price: numericCurrentPrice,
-                target_price: targetPrice,
-                current_price: numericCurrentPrice,
-                code_fipe: codeFipe,
-                fuel: fuel,
-                price_trend: priceTrend,
-                email: user.email.toLowerCase().trim(),
-                email_sent: false,
-                is_confirmed: true,
-                user_id: user.id
-            }]);
+            if (dbError) {
+                throw new Error(dbError.message);
+            }
 
-            if (dbError) throw new Error(dbError.message);
+            setStatusMsg({
+                type: "success",
+                text: "Monitoramento criado com sucesso!"
+            });
 
-            setStatusMsg({ type: 'success', text: 'Monitoramento criado com sucesso!' });
             fipe.resetForm();
             setTargetPrice(MIN_VALUE);
-            document.querySelector<HTMLButtonElement>('#bnt-close-drawer')?.click();
+
+            document
+                .querySelector<HTMLButtonElement>("#bnt-close-drawer")
+                ?.click();
+
             router.push(nextRoute);
             router.refresh();
         } catch (err: any) {
-            const errorMessage = err.message?.includes('Limite de monitoramentos')
+            const errorMessage = err.message?.includes(
+                "Limite de monitoramentos"
+            )
                 ? "Você atingiu o limite de 3 monitoramentos permitidos."
-                : (err.message || 'Erro ao criar monitoramento.');
-            setStatusMsg({ type: 'error', text: errorMessage });
+                : err.message || "Erro ao criar monitoramento.";
+
+            setStatusMsg({
+                type: "error",
+                text: errorMessage
+            });
         } finally {
             setLoading(false);
         }
@@ -121,7 +227,9 @@ export function useMonitoringForm(user: any, onRequireAuth: () => void) {
 
     return {
         fipe,
-        email: user?.email ?? '',
+        currentFipePrice,
+        targetIsValid,
+        email: user?.email ?? "",
         priceTrend,
         setPriceTrend,
         targetPrice,

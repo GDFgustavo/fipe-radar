@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useBrands, useModels, useYears, useFipeDetails, useFipeHistory, useVehicleTypes } from "./useFipe";
 
-export function useFipeForm() {
+interface UseFipeFormOptions {
+    fetchDetailsOnYear?: boolean;
+}
+
+export function useFipeForm({fetchDetailsOnYear = false}: UseFipeFormOptions = {}) {
     const [vehicleType, setVehicleType] = useState<string>("cars")
     const [brand, setBrand] = useState<string | null>(null)
     const [model, setModel] = useState<string | null>(null)
@@ -59,7 +63,7 @@ export function useFipeForm() {
 
     const handleYearChange = (yearCode: string) => {
         setYear(yearCode)
-        setShouldFetch(false)
+        setShouldFetch(fetchDetailsOnYear)
     }
 
     const handleSubmit = async () => {
