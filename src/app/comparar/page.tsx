@@ -6,12 +6,12 @@ export const metadata: Metadata = {
     title: 'Comparar Veículos e Preços | Qual veículo vale mais a pena?',
     description: 'Compare preços de diferentes modelos lado a lado. Analise qual veículo mantém melhor o valor e faça a escolha financeira mais inteligente',
     alternates: {
-        canonical: 'https://www.fiperadar.site/comparar',
+        canonical: 'https://www.fiperadar.online/comparar',
     },
     openGraph: {
         title: 'Qual veículo vale mais a pena?. Compare agora!',
         description: 'Coloque modelos lado a lado e compare a variação de preços e desvalorização na Tabela FIPE',
-        url: 'https://www.fiperadar.site/comparar',
+        url: 'https://www.fiperadar.online/comparar',
         siteName: 'FIPE Radar',
         images: [
             {
@@ -34,13 +34,13 @@ export default function Page() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Consultar Veículos",
-                "item": "https://www.fiperadar.site"
+                "item": "https://www.fiperadar.online"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Comparar Veículos",
-                "item": "https://www.fiperadar.site/comparar"
+                "item": "https://www.fiperadar.online/comparar"
             }
         ]
     };

@@ -8,7 +8,7 @@ export default function Privacidade() {
             <p style={{ margin: '8px 0' }}>
                 <span style={{ color: 'var(--text-color)' }}>
                     A sua privacidade é importante para nós. É política do FIPE Radar respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site
-                    <a href="https://www.fiperadar.site"> FIPE Radar</a>.
+                    <a href="https://www.fiperadar.online"> FIPE Radar</a>.
                 </span>
             </p>
 

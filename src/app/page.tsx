@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: 'FIPE Radar | Consulte a Tabela FIPE com preços oficiais atualizados',
   description: 'Consulte o valor atualizado de carros, motos, caminhões e ônibus. Dados oficiais da Tabela FIPE atualizados mensalmente com rapidez e precisão',
   alternates: {
-    canonical: 'https://www.fiperadar.site',
+    canonical: 'https://www.fiperadar.online',
   },
   openGraph: {
     title: 'Tabela FIPE 2026: Quanto vale seu veículo hoje?',
     description: 'Acesse a FIPE Radar e descubra o valor de mercado de qualquer veículo em segundos. Grátis e sempre atualizado',
-    url: 'https://www.fiperadar.site',
+    url: 'https://www.fiperadar.online',
     siteName: 'FIPE Radar',
     images: [
       {
@@ -29,7 +29,7 @@ export default function Page() {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Fipe Radar",
-    "url": "https://www.fiperadar.site",
+    "url": "https://www.fiperadar.online",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "All",
     "description": "Ferramenta gratuita para consulta, comparação e monitoramento de preços da Tabela Fipe.",

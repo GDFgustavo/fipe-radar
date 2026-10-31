@@ -108,7 +108,7 @@ export function FipeResultImage({ data, variation }: FipeResultImageProps) {
 
                     <p className={styles.footerRight}>
                         <Globe />
-                        fiperadar.site
+                        fiperadar.online
                     </p>
                 </div>
 

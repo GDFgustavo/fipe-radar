@@ -3,8 +3,8 @@
 Plataforma de consulta de preços FIPE de veículos com sistema de monitoramento inteligente via e-mail.
 <div>
 🔗 Demo:
-  <a href="https://www.fiperadar.site/">
-    www.fiperadar.site
+  <a href="https://www.fiperadar.online/">
+    www.fiperadar.online
   </a>
 </div>
 

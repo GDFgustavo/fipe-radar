@@ -169,7 +169,7 @@ for (const alert of alerts) {
                                 <tr>
                                     <td align="center"
                                         style="border-radius: 6px; background-color: #000; border: 1px solid #fff">
-                                        <a href="https://www.fiperadar.site/meus-monitoramentos"
+                                        <a href="https://www.fiperadar.online/meus-monitoramentos"
                                             target="_blank"
                                             style="display: inline-block; padding: 10px 28px; font-size: 16px; font-weight: 600; color: #ffffff; text-decoration: none; border-radius: 6px;">
                                             Ver meus monitoramentos
@@ -214,7 +214,7 @@ for (const alert of alerts) {
 
     if (hitTarget) {
         await resend.emails.send({
-        from: "Fipe Radar <monitoring@fiperadar.site>",
+        from: "Fipe Radar <monitoring@mail.fiperadar.online>",
         to: alert.email,
         subject: "Monitoramento de preço FIPE atingido!",
         html: emailHtml,

@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: 'Monitoramento de Preços e Alertas de Variação',
     description: 'Acompanhe a subida ou descida nos preços de veículos. Receba alertas automáticos quando o valor na Tabela FIPE mudar, seja para vender ou comprar',
     alternates: {
-        canonical: 'https://www.fiperadar.site/monitorar',
+        canonical: 'https://www.fiperadar.online/monitorar',
     },
     openGraph: {
         title: 'Saiba o momento certo de comprar ou vender seu veículo!',
         description: 'Monitore as variações da Tabela FIPE e receba avisos de alta ou baixa de preços diretamente no seu e-mail',
-        url: 'https://www.fiperadar.site/monitorar',
+        url: 'https://www.fiperadar.online/monitorar',
         siteName: 'FIPE Radar',
         images: [
             {
@@ -36,13 +36,13 @@ export default async function Page() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Consultar Veículos",
-                "item": "https://www.fiperadar.site"
+                "item": "https://www.fiperadar.online"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Monitorar Veículos",
-                "item": "https://www.fiperadar.site/monitorar"
+                "item": "https://www.fiperadar.online/monitorar"
             }
         ]
     };

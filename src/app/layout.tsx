@@ -21,11 +21,11 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "FIPE Radar",
-  "url": "https://www.fiperadar.site",
+  "url": "https://www.fiperadar.online",
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.fiperadar.site'),
+  metadataBase: new URL('https://www.fiperadar.online'),
   title: {
     default: 'FIPE Radar | Consulta e Monitoramento de Veículos',
     template: ''
