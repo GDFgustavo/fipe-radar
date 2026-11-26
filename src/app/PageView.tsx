@@ -146,41 +146,6 @@ export default function PageView() {
                 </div>
             </div>
 
-            <section className={styles.howItWorks}>
-                <div className={styles.container}>
-                    <div className={styles.sectionHeader}>
-                        <h2 className={styles.sectionTitle}>Como funciona</h2>
-                        <p className={styles.sectionDescription}>
-                            Em poucos passos você encontra o valor exato do seu veículo
-                        </p>
-                    </div>
-
-                    <div className={styles.stepsGrid}>
-                        {steps.map((item => (
-                            <div key={item.step} className={styles.stepCard}>
-                                <div className={styles.stepCircle}>{item.step}</div>
-                                <h3 className={styles.stepTitle}>{item.title}</h3>
-                                <p className={styles.stepText}>{item.description}</p>
-                            </div>
-                        )))}
-                    </div>
-                </div>
-            </section>
-
-            <section className={styles.cta}>
-                <div className={styles.container}>
-                    <div className={styles.ctaBox}>
-                        <Clock className={styles.ctaIcon} />
-                        <h2 className={styles.ctaTitle}>
-                            Monitore e receba alertas
-                        </h2>
-                        <p className={styles.ctaText}>
-                            Configure alertas de preço e seja notificado quando o veículo
-                            atingir o valor que você deseja.
-                        </p>
-                    </div>
-                </div>
-            </section>
         </div>
     )
 }
